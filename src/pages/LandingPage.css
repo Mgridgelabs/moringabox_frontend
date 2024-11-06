@@ -1,0 +1,49 @@
+.landing-Container {
+    background-color: #FEC9B7;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#moringabox1 {
+    margin-top: 0px;
+}
+#logo1 {
+    margin-top: -100px;
+}
+#app-name {
+    margin-top: -80px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+}
+#app-motto {
+    margin-top: -80px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 12px;
+}
+.landing-buttons {
+    display: flex;
+    flex-direction: column;
+    margin-top: -100px;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+}
+#login-btn {
+    width: 353px;
+    height: 56px;
+    background-color: #1E232C;
+    color: white;
+    border-radius: 8px;
+}
+#register-btn {
+    margin-top: -80px;
+    width: 353px;
+    height: 56px;
+    background-color: #FFFFFF;
+    color: black;
+    border-radius: 8px;
+}
