@@ -1,8 +1,9 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import image1 from '../assets/1579fea7df32237ed18425c4b2984c84.png'
-import image2 from '../assets/image _copy.png'
-import './LandingPage.css'
+// src/pages/LandingPage.js
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import image1 from '../assets/1579fea7df32237ed18425c4b2984c84.png';
+import image2 from '../assets/image _copy.png';
+import './LandingPage.css';
 
 function LandingPage() {
     // Initialize the navigate function
@@ -20,10 +21,12 @@ function LandingPage() {
         <p id="app-motto">Your modern solution for seamless cloud storage</p>
         <div className="landing-buttons">
             <button id="login-btn" onClick={handleLoginClick}>Login</button>
-            <button id="register-btn">Register</button>
+            <Link to="/register">
+              <button id="register-btn">Register</button>
+            </Link>
         </div>
     </div>
-  )
+  );
 }
 
-export default LandingPage
+export default LandingPage;
