@@ -1,0 +1,192 @@
+/* Base styles for LoginPage */
+.Loginpage-Container {
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    box-sizing: border-box;
+  }
+  
+  .mainContent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #back_img {
+    margin-left: -400px;
+    width: 41px;
+    height: 41px;
+  }
+  
+  .login-Content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  #welcome-message {
+    width: 305px;
+    height: 78px;
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+  }
+  
+  #inputloginData {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .login-Content input {
+    margin-top: 20px;
+    width: 331px;
+    height: 56px;
+    border: 1px solid #E8ECF4;
+    border-radius: 8px;
+    background-color: #E8ECF4;
+    padding-left: 15px;
+    font-size: 16px;
+  }
+  
+  #forgot_password {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    text-decoration: underline;
+    color: #6A707C;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16px;
+    cursor: pointer;
+  }
+  
+  #login-button {
+    width: 247px;
+    height: 55px;
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #1E232C;
+    color: white;
+    margin-top: 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  #register-route {
+    margin-top: 50px;
+    color: #1E232C;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 21px;
+    text-align: center;
+  }
+  
+  #registerLink {
+    color: #70CCCC;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 21px;
+    text-decoration: none;
+  }
+  
+  /* Media Queries for responsiveness */
+  
+  /* Mobile Devices (Portrait, smaller screens) */
+  @media (max-width: 767px) {
+    .Loginpage-Container {
+      padding: 15px; /* Less padding for smaller screens */
+    }
+  
+    #welcome-message {
+      font-size: 24px; /* Adjust font size for mobile */
+      width: 100%; /* Allow text to be more flexible */
+    }
+  
+    #inputloginData input {
+      width: 100%; /* Make inputs take full width */
+      margin-top: 10px;
+    }
+  
+    #forgot_password {
+      margin-left: 0;
+      margin-right: 0;
+      font-size: 12px; /* Slightly smaller font */
+      text-align: center;
+    }
+  
+    #login-button {
+      width: 100%; /* Make button full width on mobile */
+      font-size: 18px;
+    }
+  
+    #register-route {
+      margin-top: 20px;
+    }
+  
+    #registerLink {
+      font-size: 16px;
+    }
+  }
+  
+  /* Tablet devices (small tablets, larger phones) */
+  @media (max-width: 1024px) and (min-width: 768px) {
+    .Loginpage-Container {
+      padding: 20px; /* Slightly more padding */
+    }
+  
+    #welcome-message {
+      font-size: 26px; /* Adjust font size */
+      width: 100%;
+    }
+  
+    #inputloginData input {
+      width: 90%; /* Make inputs a little smaller */
+    }
+  
+    #forgot_password {
+      font-size: 14px; /* Adjust font size */
+    }
+  
+    #login-button {
+      width: 90%; /* Make button a little smaller */
+      font-size: 16px;
+    }
+  
+    #register-route {
+      margin-top: 30px;
+    }
+  
+    #registerLink {
+      font-size: 16px;
+    }
+  }
+  
+  /* Desktop Devices */
+  @media (min-width: 1025px) {
+    .Loginpage-Container {
+      padding: 30px; /* More padding on larger screens */
+    }
+  
+    #welcome-message {
+      font-size: 30px; /* Default font size */
+    }
+  
+    #inputloginData input {
+      width: 331px; /* Default width for inputs */
+    }
+  
+    #login-button {
+      width: 247px; /* Default button width */
+    }
+  }
+  

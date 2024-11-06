@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
-import './App.css'; // Assuming you have some global styles here
+import './App.css';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
           
           {/* Define the route for /landing */}
           <Route path="/landing" element={<LandingPage />} />
+
+          {/* Define the login route */}
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </Router>
     </div>
