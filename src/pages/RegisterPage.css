@@ -1,40 +1,184 @@
-/* src/pages/RegisterPage.css */
+/* Base styles for LoginPage */
+.Registerpage-Container {
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+  box-sizing: border-box;
+}
 
-.register-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
+.registermainContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#registerback_img {
+  margin-left: -400px;
+  width: 41px;
+  height: 41px;
+}
+
+.register-Content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+#welcome-message2 {
+  width: 305px;
+  height: 78px;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+}
+
+#inputregisterData {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.register-Content input {
+  margin-top: 20px;
+  width: 331px;
+  height: 56px;
+  border: 1px solid #E8ECF4;
+  border-radius: 8px;
+  background-color: #E8ECF4;
+  padding-left: 15px;
+  font-size: 16px;
+}
+
+#forgot_password {
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  text-decoration: underline;
+  color: #6A707C;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+#register-button {
+  width: 247px;
+  height: 55px;
+  border-radius: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #1E232C;
+  color: white;
+  margin-top: 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#login-route {
+  margin-top: 50px;
+  color: #1E232C;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: center;
+}
+
+#loginLink {
+  color: #70CCCC;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 21px;
+  text-decoration: none;
+  cursor: pointer;
+}
+#loginLink:hover {
+  text-decoration: underline;
+}
+/* Media Queries for responsiveness */
+
+/* Mobile Devices (Portrait, smaller screens) */
+@media (max-width: 767px) {
+  .Registerpage-Container {
+    padding: 15px; /* Less padding for smaller screens */
   }
-  
-  #register-title {
-    font-size: 2rem;
-    margin-bottom: 20px;
+
+  #welcome-message2 {
+    font-size: 24px; /* Adjust font size for mobile */
+    width: 100%; /* Allow text to be more flexible */
   }
-  
-  .register-form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
+
+  #inputregisterData input {
+    width: 100%; /* Make inputs take full width */
+    margin-top: 10px;
   }
-  
-  .register-form input {
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+
+  #register-button {
+    width: 100%; /* Make button full width on mobile */
+    font-size: 18px;
   }
-  
-  #register-submit-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+
+  #login-route {
+    margin-top: 20px;
   }
-  
-  #register-submit-btn:hover {
-    background-color: #45a049;
+
+  #loginLink {
+    font-size: 16px;
   }
-  
+}
+
+/* Tablet devices (small tablets, larger phones) */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .Registerpage-Container {
+    padding: 20px; /* Slightly more padding */
+  }
+
+  #welcome-message2 {
+    font-size: 26px; /* Adjust font size */
+    width: 100%;
+  }
+
+  #inputregisterData input {
+    width: 90%; /* Make inputs a little smaller */
+  }
+
+
+  #register-button {
+    width: 90%; /* Make button a little smaller */
+    font-size: 16px;
+  }
+
+  #login-route {
+    margin-top: 30px;
+  }
+
+  #loginLink {
+    font-size: 16px;
+  }
+}
+
+/* Desktop Devices */
+@media (min-width: 1025px) {
+  .Registerpage-Container {
+    padding: 30px; /* More padding on larger screens */
+  }
+
+  #welcome-message2 {
+    font-size: 30px; /* Default font size */
+  }
+
+  #inputregisterData input {
+    width: 331px; /* Default width for inputs */
+  }
+
+  #register-button {
+    width: 247px; /* Default button width */
+  }
+}

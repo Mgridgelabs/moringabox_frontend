@@ -97,6 +97,11 @@
     font-weight: 700;
     line-height: 21px;
     text-decoration: none;
+    cursor: pointer;
+  }
+
+  #registerLink:hover {
+    text-decoration: underline;
   }
   
   /* Media Queries for responsiveness */

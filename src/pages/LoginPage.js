@@ -11,6 +11,10 @@ function LoginPage() {
     navigate('/landing'); // Navigate to the Landing Page
   };
 
+  const handleRegisterClick = () => {
+    navigate('/register')
+  }
+
   return (
     <div className="Loginpage-Container">
       <div className="mainContent">
@@ -19,8 +23,8 @@ function LoginPage() {
           src={back_img} 
           alt="back" 
           id="back_img" 
-          onClick={handleBackClick} // Trigger the navigation when clicked
-          style={{ cursor: 'pointer' }} // Add cursor style to indicate it's clickable
+          onClick={handleBackClick} 
+          style={{ cursor: 'pointer' }}
         />
 
         <div className="login-Content">
@@ -38,7 +42,7 @@ function LoginPage() {
 
           {/* Register route */}
           <p id="register-route">
-            Don’t have an account? <span id="registerLink">Register Now</span>
+            Don’t have an account? <span id="registerLink" onClick={handleRegisterClick}>Register Now</span>
           </p>
         </div>
       </div>

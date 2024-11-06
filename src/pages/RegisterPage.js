@@ -1,58 +1,35 @@
-// src/pages/RegisterPage.js
-import React, { useState } from 'react';
-import './RegisterPage.css'; // Add styles for the Register page
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import back_img from '../assets/back_img.png'
+import './RegisterPage.css';
 
 function RegisterPage() {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
+  const navigate = useNavigate(); // Initialize the navigate function
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  // Function to handle the click event
+  const handleBackClick = () => {
+    navigate('/landing'); // Navigate to the Landing Page
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle the registration logic here, like making an API call
-    console.log('Form submitted:', formData);
-  };
-
+  const handleLoginClick = () => {
+    navigate('/login')
+  }
   return (
-    <div className="register-container">
-      <h1 id="register-title">Create Your Account</h1>
-      <form onSubmit={handleSubmit} className="register-form">
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleInputChange}
-          required
-        />
-        <button type="submit" id="register-submit-btn">Register</button>
-      </form>
+    <div className="Registerpage-Container">
+        <div className="registermainContent">
+        <img src={back_img} alt="back" id="registerback_img" onClick={handleBackClick} style={{ cursor: 'pointer' }} />
+        <div className="register-Content">
+            <h1 id="welcome-message2">Welcome back! Glad to see you, Again!</h1>
+            <form id="inputregisterData">
+                <input name="username" placeholder="Username" />
+                <input name="email" placeholder="Email" />
+                <input name="password" placeholder="Password" />
+                <input name="confirm_password" placeholder="Confirm password" />
+                <button type="submit" id="register-button">Login</button>
+            </form>
+            <p id="login-route">Already have an account? <span id="loginLink" onClick={handleLoginClick}>Login Now</span></p>
+        </div>
+        </div>
     </div>
   );
 }
