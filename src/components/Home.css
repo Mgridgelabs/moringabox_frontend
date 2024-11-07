@@ -1,0 +1,62 @@
+#home-Title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+}
+#search-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 50px;
+}
+.searchDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.searchDiv input {
+    width: 293px;
+    height: 40px;
+    border-radius: 28px;
+    background-color: #ECE6F0;
+    padding: 10px;
+    margin-top: 20px;
+}
+#folders-title {
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 30px;
+    margin-bottom: 5px;
+}
+.folder-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+}
+#files-title {
+    font-size: 16px;
+    color: black;
+    line-height: 16px;
+    font-weight: 400;
+}
+.files-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.files-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #5C5959C9;
+}
+.files-table th, .files-table td {
+    padding: 5px 15px;
+    text-align: center;
+}
+.files-table th {
+    cursor: pointer;
+}

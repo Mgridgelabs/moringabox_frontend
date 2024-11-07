@@ -31,6 +31,8 @@ function App() {
 
           {/* Define dashboard route with nested routes */}
           <Route path="/dashboard" element={<Dashboard />}>
+            {/* Redirect to home by default when visiting /dashboard */}
+            <Route index element={<Navigate to="home" />} />
             <Route path="home" element={<Home />} />
             <Route path="files" element={<Files />} />
             <Route path="folders" element={<Folders />} />
