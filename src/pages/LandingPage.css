@@ -3,48 +3,47 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 /* Landing Page Container */
 .landing-Container {
-  display: flex;
-  flex-direction: column;
+  margin-top: 100px;
+  background-color: #FEC9B7;
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: #FEC9B7;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  padding: 20px;
-  overflow: hidden; /* Prevent overflow within the container */
+  max-width: 700px; /* Increased max-width for larger screens */
+  margin: 0 auto; /* Centering the container */
+  padding: 30px; /* More padding for a spacious look */
+  margin-bottom: 50px;
 }
 
-/* Ensure content is spaced properly across full height */
-.landing-Container > * {
-  flex-shrink: 0;
+#moringabox1 {
+  margin-top: 0;
+  max-width: 100%;
+  height: auto; /* Make sure images scale responsively */
 }
 
-/* App Name and Motto */
+#logo1 {
+  max-width: 100%;
+  height: auto; /* Ensure logo scales on mobile */
+}
+
 #app-name {
-  font-size: 2.5rem;
+  font-size: 2.5rem; /* Larger font size for desktop */
   font-weight: 700;
-  margin-top: 20px;
+  line-height: 24px;
+  margin-top: 20px; /* Added margin for spacing */
 }
 
 #app-motto {
-  font-size: 1.2rem;
+  font-size: 1.2rem; /* Larger font size for desktop */
   font-weight: 100;
-  margin-top: 10px;
-}
-
-/* Buttons Section */
-.button-background {
-  background-color: #FEC9B7; /* The background color for the rectangle */
-  width: 100%; /* Full width of the screen */
-  padding: 20px 0; /* Padding for spacing the buttons */
-  position: relative;
-  z-index: 1; /* Ensure it's behind the buttons */
+  line-height: 18px;
+  margin-top: 10px; /* Adjusted for spacing */
 }
 
 .landing-buttons {
@@ -52,13 +51,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19px;
   margin-top: 20px;
-  z-index: 2; /* Ensure buttons are on top of the background */
 }
 
 #login-btn,
 #register-btn {
-  width: 400px;
+  width: 400px; /* Increased width for wider buttons */
   height: 56px;
   border-radius: 8px;
   font-size: 16px;
@@ -72,68 +73,92 @@
 }
 
 #register-btn {
+  width: 400px; /* Increased width for consistency */
+  height: 56px;
   background-color: #FFFFFF;
   color: black;
   margin-top: 10px;
   margin-bottom: 20px;
 }
 
-/* Make images responsive */
-#logo1, #moringabox1 {
-  max-width: 100%;
-  height: auto;
-}
-
 /* Responsive Styles */
 
 /* For devices with a max-width of 768px (tablets) */
-@media only screen and (max-width: 768px) {
+@media (max-width: 768px) {
+  .app-container {
+    padding: 0 30px; /* Reduce padding on smaller screens */
+  }
+
   #app-name {
-      font-size: 2rem;
+    font-size: 2rem; /* Smaller font size for tablets */
   }
 
   #app-motto {
-      font-size: 1.1rem;
+    font-size: 1.1rem; /* Adjusted for smaller screens */
   }
 
   .landing-buttons {
-      margin-top: 20px;
+    margin-top: 20px; /* Adjust button spacing */
   }
 
   #login-btn,
   #register-btn {
-      width: 320px;
-      height: 50px;
-      font-size: 14px;
+    width: 320px; /* Adjust button width for tablets */
+    height: 50px; /* Adjust button height */
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
+
+  #register-btn {
+    margin-top: 10px; /* Spacing adjustment */
+  }
+
+  #moringabox1,
+  #logo1 {
+    max-width: 100%;
+    height: auto;
   }
 
   .landing-Container {
-      padding: 20px;
+    padding: 20px; /* Slightly less padding for smaller screens */
   }
 }
 
 /* For devices with a max-width of 480px (mobile devices) */
-@media only screen and (max-width: 480px) {
+@media (max-width: 480px) {
+  .app-container {
+    padding: 0 20px; /* Even less padding for very small screens */
+  }
+
   #app-name {
-      font-size: 1.8rem;
+    font-size: 1.8rem; /* Smaller font size for mobile */
   }
 
   #app-motto {
-      font-size: 1rem;
+    font-size: 1rem; /* Adjust further for mobile */
   }
 
   .landing-buttons {
-      margin-top: 20px;
+    margin-top: 20px;
   }
 
   #login-btn,
   #register-btn {
-      width: 280px;
-      height: 48px;
-      font-size: 14px;
+    width: 280px; /* Adjust button width for mobile */
+    height: 48px; /* Adjust button height */
+    font-size: 14px; /* Adjust font size */
+  }
+
+  #register-btn {
+    margin-top: 8px; /* Adjust spacing between buttons */
+  }
+
+  #moringabox1,
+  #logo1 {
+    width: 100%; /* Ensure images fill the available space */
+    height: auto;
   }
 
   .landing-Container {
-      padding: 15px;
+    padding: 15px; /* Reduce padding for smaller screens */
   }
 }
