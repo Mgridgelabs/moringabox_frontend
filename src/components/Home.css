@@ -35,6 +35,14 @@
     gap: 10px;
     justify-content: flex-start;
 }
+.filesDiv {
+    background-color: #5C5959C9;
+    height: 450px;
+    margin-top: 10px;
+    border-top-right-radius: 18px;
+    border-top-left-radius: 18px;
+    padding: 10px;
+}
 #files-title {
     font-size: 16px;
     color: black;
@@ -45,13 +53,12 @@
     width: 100%;
     max-width: 800px;
     margin: 20px auto;
-    overflow-y: auto;
-    overflow-x: auto;
 }
 .files-table {
     width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #5C5959C9;
+    border-collapse: separate;
+    border-bottom: 1px solid #5C5959C9;
+    border-spacing: 0 10px;
 }
 .files-table th, .files-table td {
     padding: 5px 15px;
@@ -59,4 +66,50 @@
 }
 .files-table th {
     cursor: pointer;
+}
+
+.files-table td:not(:first-child) {
+    cursor: pointer;
+    background-color: #D9D9D9;
+    color: black;
+    font-size: 12px;
+}
+.file-options {
+    text-align: right;
+    margin-left: 100px;
+}
+.file-icon {
+    width: 5%;
+}
+#file_icon {
+    width: 17.45px;
+    height: 23.86px;
+}
+#more_vert {
+    width: 3.02px;
+    height: 11.45px;
+}
+.files-table tbody tr td:nth-child(2) {
+    border-top-left-radius: 8px;
+}
+.files-table tbody tr td:nth-child(4) {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.files-table {
+    max-height: 400px; /* Set a max height to trigger scrolling */
+    overflow-y: auto; /* Add vertical scrolling if content exceeds max height */
+}
+
+.files-table::-webkit-scrollbar {
+    width: 5px; /* Set scrollbar width */
+}
+
+.files-table::-webkit-scrollbar-thumb {
+    background-color: #A9A9A9; /* Set scrollbar thumb color */
+    border-radius: 8px;
+}
+
+.files-table::-webkit-scrollbar-track {
+    background-color: transparent; /* Transparent to avoid affecting design */
 }
