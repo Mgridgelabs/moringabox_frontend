@@ -19,13 +19,13 @@ function RegisterPage() {
         <div className="registermainContent">
         <img src={back_img} alt="back" id="registerback_img" onClick={handleBackClick} style={{ cursor: 'pointer' }} />
         <div className="register-Content">
-            <h1 id="welcome-message2">Welcome back! Glad to see you, Again!</h1>
+            <h1 id="welcome-message2">Hello! Register to get started</h1>
             <form id="inputregisterData">
                 <input name="username" placeholder="Username" />
                 <input name="email" placeholder="Email" />
                 <input name="password" placeholder="Password" />
                 <input name="confirm_password" placeholder="Confirm password" />
-                <button type="submit" id="register-button">Login</button>
+                <button type="submit" id="register-button">Register</button>
             </form>
             <p id="login-route">Already have an account? <span id="loginLink" onClick={handleLoginClick}>Login Now</span></p>
         </div>
