@@ -1,5 +1,6 @@
 .Dashboard-Container {
-    background-image: url('../assets/background_img1.png');
+    /* background-image: url('../assets/background_img1.png'); */
+    /* background-color: red; */
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
@@ -9,7 +10,7 @@
     margin: 0 auto;
     margin-bottom: 50px;
     height: 800px;
-    color: white;
+    color: black;
 }
 
 .navBar {

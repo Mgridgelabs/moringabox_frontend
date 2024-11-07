@@ -1,8 +1,8 @@
 import React from 'react'
-
+import './Trash.js'
 function Trash() {
   return (
-    <div>Trash</div>
+    <div id="Trash">Trash</div>
   )
 }
 
