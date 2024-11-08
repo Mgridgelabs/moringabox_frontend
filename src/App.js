@@ -6,8 +6,8 @@ import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
 import Home from './components/Home';
 import New from './components/New';
-import Files from './components/Files';
-import Folders from './components/Folders';
+import FilesPage from './pages/FilesPage';
+import FoldersPage from './pages/FoldersPage';
 import Recents from './components/Recents';
 import Trash from './components/Trash';
 import './App.css';
@@ -34,8 +34,8 @@ function App() {
             {/* Redirect to home by default when visiting /dashboard */}
             <Route index element={<Navigate to="home" />} />
             <Route path="home" element={<Home />} />
-            <Route path="files" element={<Files />} />
-            <Route path="folders" element={<Folders />} />
+            <Route path="files" element={<FilesPage />} />
+            <Route path="folders" element={<FoldersPage />} />
             <Route path="recents" element={<Recents />} />
             <Route path="trash" element={<Trash />} />
             <Route path="new" element={<New />} />

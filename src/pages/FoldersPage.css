@@ -1,0 +1,12 @@
+.page {
+    display: flex;
+}
+  
+/* background-image: url('your-background-image.jpg'); Add background image if needed */
+.main {
+flex: 1;
+background-size: cover;
+height: 100vh;
+overflow-y: auto;
+padding: 20px;
+}

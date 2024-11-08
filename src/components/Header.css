@@ -1,0 +1,17 @@
+
+.header-controls {
+    display: flex;
+    gap: 30px;
+    padding: 10px;
+    /* background-color: #86a398; Background color as in the screenshot */
+    border-radius: 5px;
+    margin-bottom: 20px; /* Space between header and content */
+  }
+  
+  .header-controls select,
+  .header-controls input {
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+  }
+  

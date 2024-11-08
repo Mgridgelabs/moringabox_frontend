@@ -1,0 +1,11 @@
+.page {
+    display: flex;
+}
+  
+.main {
+    flex: 1;
+    /* background-color: #e8f0f2; */
+    height: 100vh;
+    overflow-y: auto;
+}
+  
