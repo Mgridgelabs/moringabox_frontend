@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import back_img from '../assets/back_img.png'
+import back_img from '../assets/image _copy.png'
 import './RegisterPage.css';
 
 function RegisterPage() {
