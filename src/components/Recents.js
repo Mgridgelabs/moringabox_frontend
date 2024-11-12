@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Clock, File, FileText, Image, Video, Folder, Search, X } from 'lucide-react';
 import './Recents.css';
 
@@ -6,26 +7,7 @@ const Recents = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [filteredItems, setFilteredItems] = useState({});
-
-  // Sample data - replace this with your actual data fetching logic
-  const mockData = {
-    Today: [
-      { id: 1, name: 'Project Report.pdf', type: 'document', size: '2.5 MB', lastModified: new Date() },
-      { id: 2, name: 'Meeting Notes.docx', type: 'document', size: '1.2 MB', lastModified: new Date() },
-      { id: 3, name: 'Screenshot.png', type: 'image', size: '4.7 MB', lastModified: new Date() }
-    ],
-    Yesterday: [
-      { id: 4, name: 'Presentation.pptx', type: 'document', size: '5.8 MB', lastModified: new Date(Date.now() - 86400000) },
-      { id: 5, name: 'Video Tutorial.mp4', type: 'video', size: '25.4 MB', lastModified: new Date(Date.now() - 86400000) }
-    ],
-    'Last Week': [
-      { id: 6, name: 'Project Assets', type: 'folder', size: '168 MB', lastModified: new Date(Date.now() - 5 * 86400000) },
-      { id: 7, name: 'Client Meeting.mp4', type: 'video', size: '85.2 MB', lastModified: new Date(Date.now() - 6 * 86400000) }
-    ],
-    'Last Month': [
-      { id: 8, name: 'Archive', type: 'folder', size: '2.1 GB', lastModified: new Date(Date.now() - 25 * 86400000) }
-    ]
-  };
+  const [items, setItems] = useState({});
 
   const getIconForType = (type) => {
     switch (type) {
@@ -47,15 +29,29 @@ const Recents = () => {
       hour: 'numeric',
       minute: 'numeric',
       hour12: true
-    }).format(date);
+    }).format(new Date(date));
   };
+
+  useEffect(() => {
+    // Fetch data from the backend API using Axios
+    const fetchItems = async () => {
+      try {
+        const response = await axios.get('/api/recents'); // Replace with your backend endpoint
+        setItems(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchItems();
+  }, []);
 
   useEffect(() => {
     // Filter and search logic
     const filterItems = () => {
       const filtered = {};
-      Object.entries(mockData).forEach(([timeFrame, items]) => {
-        filtered[timeFrame] = items.filter(item => {
+      Object.entries(items).forEach(([timeFrame, itemsArray]) => {
+        filtered[timeFrame] = itemsArray.filter(item => {
           const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
           const matchesType = selectedType === 'all' || item.type === selectedType;
           return matchesSearch && matchesType;
@@ -65,7 +61,7 @@ const Recents = () => {
     };
 
     filterItems();
-  }, [searchQuery, selectedType, mockData]); // Add mockData here
+  }, [searchQuery, selectedType, items]);
 
   const clearSearch = () => {
     setSearchQuery('');
@@ -109,17 +105,17 @@ const Recents = () => {
       </div>
 
       <div className="time-categories">
-        {Object.entries(filteredItems).map(([timeFrame, items]) => (
+        {Object.entries(filteredItems).map(([timeFrame, itemsArray]) => (
           <div key={timeFrame} className="category-section">
             <h2 className="category-title">{timeFrame}</h2>
             <div className="category-content">
-              {items.length === 0 ? (
+              {itemsArray.length === 0 ? (
                 <div className="empty-state">
                   No items found for this period
                 </div>
               ) : (
                 <div className="items-grid">
-                  {items.map((item) => (
+                  {itemsArray.map((item) => (
                     <div key={item.id} className="item-card">
                       <div className="item-icon-wrapper">
                         {getIconForType(item.type)}

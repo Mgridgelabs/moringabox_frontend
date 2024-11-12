@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import axios from 'axios';
 import { Upload, FolderPlus, Image, Video, Music, FileText } from 'lucide-react';
 import './New.css';
 
@@ -18,28 +19,41 @@ const New = () => {
     }
   }, []);
 
-  const simulateUpload = (file) => {
+  const uploadFile = (file) => {
     setUploading(true);
     setUploadProgress(0);
-    
-    const interval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setUploading(false);
-          return 100;
-        }
-        return prev + 10;
-      });
-    }, 300);
 
-    setRecentFiles(prev => [{
-      id: Date.now(),
-      name: file.name,
-      type: file.type,
-      size: file.size,
-      date: new Date()
-    }, ...prev].slice(0, 5));
+    // Create a FormData object to send the file
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // Send the file to the backend using Axios
+    axios.post('/api/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        setUploadProgress(percentCompleted);
+      }
+    })
+    .then((response) => {
+      setUploading(false);
+      setUploadProgress(100);
+      
+      // Add uploaded file to recent files
+      setRecentFiles(prev => [{
+        id: response.data.id, // Assuming the backend returns the file ID
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        date: new Date()
+      }, ...prev].slice(0, 5));
+    })
+    .catch((error) => {
+      console.error('Error uploading file:', error);
+      setUploading(false);
+    });
   };
 
   const handleDrop = useCallback((e) => {
@@ -49,13 +63,13 @@ const New = () => {
     
     const files = e.dataTransfer.files;
     if (files && files[0]) {
-      simulateUpload(files[0]);
+      uploadFile(files[0]);
     }
   }, []);
 
   const handleFileInput = useCallback((e) => {
     const files = e.target.files;
-    Array.from(files).forEach(file => simulateUpload(file));
+    Array.from(files).forEach(file => uploadFile(file));
   }, []);
 
   const getFileIcon = (type) => {
@@ -97,7 +111,6 @@ const New = () => {
                   className="file-input"
                   onChange={handleFileInput}
                   multiple
-                  webkitdirectory="true" // Enables folder upload
                 />
                 <button
                   onClick={() => document.getElementById('fileInput').click()}
