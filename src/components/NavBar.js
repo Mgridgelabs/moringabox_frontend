@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import image2 from '../assets/image _copy.png';
 import newLogo from '../assets/new_logo.png';
 import homeLogo from '../assets/home_logo.png';
@@ -7,9 +7,20 @@ import filesLogo from '../assets/files_logo.png';
 import foldersLogo from '../assets/folders_logo.png';
 import recentsLogo from '../assets/recents_logo.png';
 import trashLogo from '../assets/trash_logo.png';
+import logoutIcon from '../assets/logout_icon.png'; // Add a logout icon
 import './NavBar.css';
 
 function NavBar() {
+  const navigate = useNavigate();
+
+  // Function to handle logout
+  const handleLogout = () => {
+    // Clear the session data
+    localStorage.removeItem('token'); 
+    // Navigate to the landing page
+    navigate('/landing');
+  };
+
   return (
     <div className="navBar">
       <img src={image2} alt="logo" id="logo2" />
@@ -31,6 +42,13 @@ function NavBar() {
       <Link to="/dashboard/trash">
         <img src={trashLogo} alt="trash" id="trashLogo" />
       </Link>
+      <img
+        src={logoutIcon}
+        alt="logout"
+        id="logoutIcon"
+        onClick={handleLogout}
+        style={{ cursor: 'pointer' }}
+      />
     </div>
   );
 }
