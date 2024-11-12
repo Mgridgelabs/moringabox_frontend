@@ -1,46 +1,81 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import back_img from '../assets/image _copy.png';
 import './LoginPage.css';
 
 function LoginPage() {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
-  // Function to handle the click event
   const handleBackClick = () => {
-    navigate('/landing'); // Navigate to the Landing Page
+    navigate('/landing');
   };
 
   const handleRegisterClick = () => {
-    navigate('/register')
-  }
+    navigate('/register');
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem('token', data.access_token); // Store token
+        navigate('/dashboard'); // Navigate to the protected dashboard page
+      } else {
+        setError(data.error);
+      }
+    } catch (err) {
+      setError('Something went wrong. Please try again later.');
+    }
+  };
 
   return (
     <div className="Loginpage-Container">
       <div className="mainContent">
-        {/* Clickable background image */}
-        <img 
-          src={back_img} 
-          alt="back" 
-          id="back_img" 
-          onClick={handleBackClick} 
+        <img
+          src={back_img}
+          alt="back"
+          id="back_img"
+          onClick={handleBackClick}
           style={{ cursor: 'pointer' }}
         />
-
         <div className="login-Content">
-          <h1 id="welcome-message">
-            Welcome back! Glad to see you, Again!
-          </h1>
-
-          {/* Login Form */}
-          <form id="inputloginData">
-            <input name="email" type="email" placeholder="Enter your email:" required />
-            <input name="password" type="password" placeholder="Enter your password:" required />
+          <h1 id="welcome-message">Welcome back! Glad to see you, Again!</h1>
+          <form id="inputloginData" onSubmit={handleLogin}>
+            <input
+              name="email"
+              type="text"
+              placeholder="Enter your username:"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Enter your password:"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && <p className="error">{error}</p>}
             <p id="forgot_password">Forgot password?</p>
             <button type="submit" id="login-button">Login</button>
           </form>
-
-          {/* Register route */}
           <p id="register-route">
             Don’t have an account? <span id="registerLink" onClick={handleRegisterClick}>Register Now</span>
           </p>
