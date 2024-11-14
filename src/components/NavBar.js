@@ -44,7 +44,7 @@ function NavBar() {
         <img src={trashLogo} alt="trash" id="trashLogo" />
       </Link>
       
-      {/* Add StorageIndicator component below the Trash icon */}
+    
       <div className="storage-wrapper">
         <StorageIndicator />
       </div>
