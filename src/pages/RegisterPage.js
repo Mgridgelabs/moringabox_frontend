@@ -37,7 +37,7 @@ function RegisterPage() {
     }
 
     try {
-      const response = await fetch('http://cloudy-wiwu.onrender.com/api/auth/register', {
+      const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
