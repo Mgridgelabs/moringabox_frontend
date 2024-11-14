@@ -1,0 +1,97 @@
+/* General reset for margin, padding, and box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f8fa;  /* Light background to fit the minimalistic design */
+  }
+  
+  /* Storage container with more compact styling */
+  .storage-container {
+    width: 100%;
+    max-width: 320px;  /* Narrower width for a more compact design */
+    margin: 10px auto;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 6px;  /* Slightly smaller radius for a more subtle rounded corner */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 14px;  /* Smaller text size for the whole container */
+  }
+  
+  /* Storage header styling for a clean and concise header */
+  .storage-header {
+    margin-bottom: 12px;
+  }
+  
+  .storage-title {
+    font-size: 1.2rem;  /* Smaller font size for the title */
+    font-weight: 500;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;  /* Slightly reduced letter-spacing for tighter appearance */
+  }
+  
+  /* Progress bar container with subtle styling */
+  .progress-bar-container {
+    background-color: #e0e0e0;
+    height: 8px;  /* Smaller height for a more compact progress bar */
+    border-radius: 4px;  /* Subtle rounded corners */
+    width: 100%;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  
+  /* Base styling for the progress bar */
+  .progress-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;  /* Smooth transition for width change */
+  }
+  
+  /* Colors for different usage levels */
+  .progress-bar.green {
+    background-color: #4caf50; /* Green for safe usage */
+  }
+  
+  .progress-bar.yellow {
+    background-color: #ffeb3b; /* Yellow for moderate usage */
+  }
+  
+  .progress-bar.red {
+    background-color: #f44336; /* Red for high usage */
+  }
+  
+  /* Optional text for the progress bar (if needed) */
+  .progress-bar-text {
+    position: absolute;
+    top: -18px;  /* Moves text up above the progress bar */
+    width: 100%;
+    font-size: 12px;
+    font-weight: 500;
+    color: #333;
+    text-align: center;
+  }
+  /* Ensure responsiveness for smaller screens */
+  @media (max-width: 480px) {
+    .storage-container {
+      width: 90%;  /* Take up more width on smaller screens */
+      padding: 10px;  /* Slightly reduced padding for mobile devices */
+    }
+  
+    .storage-title {
+      font-size: 1.1rem;  /* Slightly smaller font for small screens */
+    }
+  
+    .progress-bar-container {
+      height: 7px;  /* Even smaller progress bar on mobile for tight design */
+    }
+  
+    .progress-bar {
+      border-radius: 3px;  /* Smaller border-radius on mobile */
+    }
+  }

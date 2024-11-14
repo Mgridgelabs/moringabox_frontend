@@ -8,6 +8,7 @@ import foldersLogo from '../assets/folders_logo.png';
 import recentsLogo from '../assets/recents_logo.png';
 import trashLogo from '../assets/trash_logo.png';
 import logoutIcon from '../assets/logout_icon.png'; // Add a logout icon
+import StorageIndicator from './Storage'; // Import the StorageIndicator component
 import './NavBar.css';
 
 function NavBar() {
@@ -42,6 +43,12 @@ function NavBar() {
       <Link to="/dashboard/trash">
         <img src={trashLogo} alt="trash" id="trashLogo" />
       </Link>
+      
+      {/* Add StorageIndicator component below the Trash icon */}
+      <div className="storage-wrapper">
+        <StorageIndicator />
+      </div>
+
       <img
         src={logoutIcon}
         alt="logout"
