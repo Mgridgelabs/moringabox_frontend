@@ -85,3 +85,11 @@
 #recentsLogo:hover {
     border-bottom: 1px solid grey;
 }
+#logoutIcon {
+    width: 30px;
+    height: 30px;
+    margin-top: 30px;
+}
+#logoutIcon:hover {
+    border-bottom: 1px solid grey;
+}

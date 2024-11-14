@@ -43,12 +43,6 @@ function NavBar() {
       <Link to="/dashboard/trash">
         <img src={trashLogo} alt="trash" id="trashLogo" />
       </Link>
-      
-    
-      <div className="storage-wrapper">
-        <StorageIndicator />
-      </div>
-
       <img
         src={logoutIcon}
         alt="logout"
@@ -56,6 +50,9 @@ function NavBar() {
         onClick={handleLogout}
         style={{ cursor: 'pointer' }}
       />
+      <div className="storage-wrapper">
+        <StorageIndicator />
+      </div>
     </div>
   );
 }
