@@ -2,17 +2,18 @@
 import React from 'react';
 import './FileFolderContent.css';
 
-const FileFolderContent = ({ type }) => {
-  // Generate a list of items based on the type
-  const items = Array.from({ length: 10 }, (_, i) => `${type} ${i + 1}`);
-
+const FileFolderContent = ({ items, type }) => {
   return (
-    <div className="content">
-      {items.map((item, index) => (
-        <div key={index} className="item">
-          {item}
-        </div>
-      ))}
+    <div className="file-folder-content">
+      {items.length > 0 ? (
+        items.map((item, index) => (
+          <div key={index} className="file-folder-item">
+            {type === 'file' ? `${item.name}${item.type}` : item.name}
+          </div>
+        ))
+      ) : (
+        <p className="no-item-message">No {type === 'file' ? 'files' : 'folders'} found.</p>
+      )}
     </div>
   );
 };
