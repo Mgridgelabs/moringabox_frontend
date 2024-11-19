@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import './New.css';
 import { 
   Image, 
   Video, 
   File, 
   FileText, 
   Music, 
-  Link, 
   UploadCloud 
 } from 'lucide-react';
-import './New.css';
 
 const New = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -56,23 +55,20 @@ const New = () => {
           const percentCompleted = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total
           );
-          
-          // Update progress for this specific file
-          setUploadProgress(prev => ({
+
+          setUploadProgress((prev) => ({
             ...prev,
             [file.name]: percentCompleted
           }));
 
-          // Update status
-          setUploadStatus(prev => ({
+          setUploadStatus((prev) => ({
             ...prev,
             [file.name]: percentCompleted === 100 ? 'Completed' : 'Uploading'
           }));
         }
       });
 
-      // Add to recent files
-      setRecentFiles(prev => [
+      setRecentFiles((prev) => [
         {
           name: file.name,
           type: file.type,
@@ -81,10 +77,9 @@ const New = () => {
           serverResponse: response.data
         },
         ...prev
-      ].slice(0, 5));  // Keep only the 5 most recent files
+      ].slice(0, 5));
 
-      // Mark as successful
-      setUploadStatus(prev => ({
+      setUploadStatus((prev) => ({
         ...prev,
         [file.name]: 'Success'
       }));
@@ -97,8 +92,7 @@ const New = () => {
         errorResponse: error.response?.data
       });
 
-      // Mark as failed
-      setUploadStatus(prev => ({
+      setUploadStatus((prev) => ({
         ...prev,
         [file.name]: 'Failed'
       }));
@@ -115,27 +109,13 @@ const New = () => {
     }
 
     try {
-      // Upload files sequentially
       for (const file of selectedFiles) {
         await uploadFile(file);
       }
-
-      // Clear selected files after successful upload
       setSelectedFiles([]);
     } catch (error) {
       console.error('Bulk Upload Failed:', error);
     }
-  };
-
-  // Cancel upload for a specific file
-  const cancelUpload = (fileName) => {
-    // Implement cancellation logic if needed
-    setUploadStatus(prev => ({
-      ...prev,
-      [fileName]: 'Cancelled'
-    }));
-
-    
   };
 
   return (
@@ -146,13 +126,17 @@ const New = () => {
           <p>Select and upload multiple files</p>
         </div>
 
-        {/* File Input */}
+        {/* Updated File Input */}
         <div className="file-input-container">
+          <label htmlFor="fileInput" className="file-input-label">
+            Choose Files
+          </label>
           <input 
+            id="fileInput"
             type="file" 
             multiple 
             onChange={handleFileSelect}
-            className="file-input"
+            className="file-input" 
           />
           <button 
             onClick={handleBulkUpload}
@@ -178,7 +162,7 @@ const New = () => {
                   <div className="upload-progress">
                     <div 
                       className="progress-bar" 
-                      style={{width: `${uploadProgress[file.name]}%`}}
+                      style={{ width: `${uploadProgress[file.name]}%` }}
                     />
                     <span>{uploadProgress[file.name]}%</span>
                   </div>
@@ -186,12 +170,6 @@ const New = () => {
                 <span className={`upload-status ${uploadStatus[file.name]?.toLowerCase()}`}>
                   {uploadStatus[file.name] || 'Pending'}
                 </span>
-                <button 
-                  onClick={() => cancelUpload(file.name)}
-                  className="cancel-upload"
-                >
-                  Cancel
-                </button>
               </div>
             ))}
           </div>
