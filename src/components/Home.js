@@ -1,9 +1,28 @@
-import React from 'react'
+import React, {useEffect, useState } from 'react'
 import FolderCards from './FolderCards'
 import FileRows from './FileRows'
 import './Home.css'
+import axios from 'axios'
 
 function Home() {
+  const [files, setFiles] = useState([]);
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const fetchFiles = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://cloudy-wiwu.onrender.com/api/recents/files', {
+          headers: {Authorization : `Bearer ${token}`},
+        });
+        setFiles(response.data.recent_files);
+      } catch (err) {
+        console.error(err);
+        setError('Failes to fetch files');
+      }
+    };
+    fetchFiles();
+  }, []);
   return (
     <div className="home-Content">
       <h1 id="home-Title">Welcome To Drive</h1>
@@ -30,7 +49,13 @@ function Home() {
               </tr>
             </thead>
             <tbody>
-              <FileRows />
+              {files.length > 0 ? (
+                files.map((file) => <FileRows key={file.id} file={file} />)
+              ) : (
+                <tr>
+                  <td colSpan="4">No Files Uploaded</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
