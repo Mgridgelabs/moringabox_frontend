@@ -1,26 +1,43 @@
-import React, { useState }  from 'react';
-// import NavBar from '../components/NavBar';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import FileFolderContent from '../components/FileFolderContent';
 import './FoldersPage.css';
 import { Folder } from 'lucide-react';
+import axios from 'axios';
 
 const FoldersPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [folders, setFolders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  // Sample folders list
-  const folders = [
-    { id: 1, name: 'Project Documents' },
-    { id: 2, name: 'Images' },
-    { id: 3, name: 'Videos' },
-    { id: 4, name: 'Music' },
-    { id: 5, name: 'PDFs' },
-    { id: 6, name: 'Spreadsheets' },
-    { id: 7, name: 'Presentations' },
-    { id: 8, name: 'Backup' },
-    { id: 9, name: 'Personal' },
-    { id: 10, name: 'Work' },
-  ];
+  useEffect(() => {
+    const fetchFolders = async () => {
+      try {
+        const token = localStorage.getItem('token'); // Assume token is stored in localStorage
+        if (!token) {
+          setError('User is not authenticated');
+          setLoading(false);
+          return;
+        }
+
+        const response = await axios.get('http://localhost:5000/api/recents/folders', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        setFolders(response.data.recent_folders);
+      } catch (err) {
+        setError(err.response?.data?.msg || 'Failed to fetch folders');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFolders();
+  }, []);
 
   // Filtered list of folders based on search term
   const filteredFolders = folders.filter(folder =>
@@ -30,7 +47,7 @@ const FoldersPage = () => {
   return (
     <div className="folder-page-container">
       <div className="icon-and-title">
-        <Folder className="icon"/>
+        <Folder className="icon" />
         <h2>Folders</h2>
       </div>
 
@@ -44,8 +61,14 @@ const FoldersPage = () => {
         />
       </div>
 
-      {/* Display Folders using FileFolderContent Component */}
-      <FileFolderContent items={filteredFolders} itemType="folder" />
+      {/* Display loading, error, or folders */}
+      {loading ? (
+        <p>Loading folders...</p>
+      ) : error ? (
+        <p className="error-message">{error}</p>
+      ) : (
+        <FileFolderContent items={filteredFolders} itemType="folder" />
+      )}
     </div>
   );
 };
