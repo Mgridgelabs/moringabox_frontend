@@ -19,6 +19,7 @@ function Home() {
       } catch (err) {
         console.error(err);
         setError('Failes to fetch files');
+        console.log(error)
       }
     };
     fetchFiles();

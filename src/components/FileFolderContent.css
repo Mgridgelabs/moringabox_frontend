@@ -8,7 +8,7 @@
   border: 1px solid rgba(0, 0, 0, 0.1); /* Optional: light border for visibility */
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
-  color: red; /* Text color */
+  color: black; /* Text color */
   cursor: pointer;
 }
 

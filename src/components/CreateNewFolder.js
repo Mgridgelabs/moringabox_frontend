@@ -14,9 +14,9 @@ const CreateFolder = () => {
     e.preventDefault();
 
     try {
-      const token = localStorage.getItem("token"); // Assume the JWT is stored in localStorage
+      const token = localStorage.getItem("token"); // JWT stored in localStorage
       const response = await axios.post(
-        "http://localhost:5000/api/folders/create",
+        "/api/folders/create",
         { name: folderName },
         {
           headers: {

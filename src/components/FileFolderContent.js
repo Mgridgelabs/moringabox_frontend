@@ -1,19 +1,18 @@
-
 import React from 'react';
-import './FileFolderContent.css';
+//import './FileFolderContent.css';
 
-const FileFolderContent = ({ items, type }) => {
+const FileFolderContent = ({ items, itemType, onItemClick }) => {
   return (
     <div className="file-folder-content">
-      {items.length > 0 ? (
-        items.map((item, index) => (
-          <div key={index} className="file-folder-item">
-            {type === 'file' ? `${item.name}${item.type}` : item.name}
-          </div>
-        ))
-      ) : (
-        <p className="no-item-message">No {type === 'file' ? 'files' : 'folders'} found.</p>
-      )}
+      {items.map((item) => (
+        <div
+          key={item.id}
+          className={`item ${itemType}`}
+          onClick={() => onItemClick && onItemClick(item)} // Call onItemClick if provided
+        >
+          <p>{item.name}</p>
+        </div>
+      ))}
     </div>
   );
 };
