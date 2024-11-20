@@ -48,7 +48,7 @@ const New = () => {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('/api/upload/upload_file', formData, {
+      const response = await axios.post('https://cloudy-wiwu.onrender.com/api/upload/upload_file', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },

@@ -1,40 +1,74 @@
-import React, {useEffect, useState } from 'react'
-import FolderCards from './FolderCards'
-import FileRows from './FileRows'
-import './Home.css'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import FolderCards from './FolderCards';
+import FileRows from './FileRows';
+import './Home.css';
+import axios from 'axios';
 
 function Home() {
   const [files, setFiles] = useState([]);
-  const [error, setError] = useState('')
+  const [folders, setFolders] = useState([]);
+  const [filesError, setFilesError] = useState('');
+  const [foldersError, setFoldersError] = useState('');
 
+  // Fetch Files
   useEffect(() => {
     const fetchFiles = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://cloudy-wiwu.onrender.com/api/recents/files', {
-          headers: {Authorization : `Bearer ${token}`},
-        });
+        const response = await axios.get(
+          'https://cloudy-wiwu.onrender.com/api/recents/files',
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setFiles(response.data.recent_files);
       } catch (err) {
         console.error(err);
-        setError('Failes to fetch files');
-        console.log(error)
+        setFilesError('Failed to fetch files');
       }
     };
     fetchFiles();
   }, []);
+
+  // Fetch Folders
+  useEffect(() => {
+    const fetchFolders = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(
+          'https://cloudy-wiwu.onrender.com/api/recents/folders',
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setFolders(response.data.recent_folders);
+      } catch (err) {
+        console.error(err);
+        setFoldersError('Failed to fetch folders');
+      }
+    };
+    fetchFolders();
+  }, []);
+
   return (
     <div className="home-Content">
       <h1 id="home-Title">Welcome To Drive</h1>
       <div className="searchDiv">
         <h2 id="search-title">Search</h2>
-        <input name="search field" placeholder="search text"/>
+        <input name="search field" placeholder="search text" />
       </div>
       <div className="foldersDiv">
         <h1 id="folders-title">Folders</h1>
         <div className="folder-cards">
-          <FolderCards />
+          {foldersError ? (
+            <p>{foldersError}</p>
+          ) : folders.length > 0 ? (
+            folders.map((folder) => (
+              <FolderCards key={folder.id} folderName={folder.name} />
+            ))
+          ) : (
+            <p>No Folders Found</p>
+          )}
         </div>
       </div>
       <div className="filesDiv">
@@ -50,7 +84,11 @@ function Home() {
               </tr>
             </thead>
             <tbody>
-              {files.length > 0 ? (
+              {filesError ? (
+                <tr>
+                  <td colSpan="4">{filesError}</td>
+                </tr>
+              ) : files.length > 0 ? (
                 files.map((file) => <FileRows key={file.id} file={file} />)
               ) : (
                 <tr>
@@ -62,7 +100,7 @@ function Home() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
