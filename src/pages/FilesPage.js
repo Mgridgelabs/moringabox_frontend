@@ -1,59 +1,71 @@
-import React, { useState } from 'react';
-import FileFolderContent from '../components/FileFolderContent';
-import './FilesPage.css';
-import { File } from 'lucide-react';
-
+import React, { useState, useEffect } from "react";
+import supabase from "../supabase"; // Import the Supabase client
 
 const FilesPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [fileType, setFileType] = useState('All types');
-  const files = [
-    { name: 'Document 1', type: '.pdf' },
-    { name: 'Spreadsheet 1', type: '.xlsx' },
-    { name: 'Presentation 1', type: '.pptx' },
-    { name: 'Image 1', type: '.jpg' },
-    { name: 'Document 2', type: '.docx' },
-    { name: 'Spreadsheet 2', type: '.xlsx' },
-    { name: 'Presentation 2', type: '.pptx' },
-    { name: 'Image 2', type: '.png' },
-    { name: 'Document 3', type: '.pdf' },
-    { name: 'Presentation 3', type: '.pptx' }
-  ];
+  const [files, setFiles] = useState([]);
+  const [error, setError] = useState("");
 
-  const filteredFiles = files.filter(file => {
-    const matchesType = fileType === 'All types' || file.type === fileType;
-    const matchesSearch = file.name.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesType && matchesSearch;
-  });
+  const token = localStorage.getItem("token");
+
+  const fetchFiles = async () => {
+    try {
+      const { data, error } = await supabase
+        .storage
+        .from('bucket')  // Replace 'bucket' with your actual bucket name
+        .list('files', {
+          // Optional: You can specify directory, file filtering, etc.
+          limit: 10,   // Limit the number of files if needed
+          offset: 0,   
+        });
+
+      if (error) {
+        setError(error.message);
+      } else {
+        // Assuming you need the metadata like file name, size, etc.
+        setFiles(data);
+        setError("");  // Clear any previous errors
+      }
+    } catch (err) {
+      setError("Failed to fetch files.");
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      fetchFiles();
+    } else {
+      setError("User not logged in. Please log in to view files.");
+    }
+  }, [token]); // Dependency array: re-run on token change
 
   return (
-    <div className="file-page-container">
-      <div className="header">
-        <div className="icon-and-title">
-          {/* <img src="/path-to-icon/icon.png" alt="Files Icon" className="icon" /> */}
-          <File className="icon file"/>
-          <h2>Files</h2>
-        </div>
-        <div className="filters">
-          <select value={fileType} onChange={(e) => setFileType(e.target.value)}>
-            <option>All types</option>
-            <option value=".pdf">PDF</option>
-            <option value=".docx">DOCX</option>
-            <option value=".xlsx">XLSX</option>
-            <option value=".pptx">PPTX</option>
-            <option value=".jpg">JPG</option>
-            <option value=".png">PNG</option>
-          </select>
-          <input
-            type="text"
-            placeholder="Search files..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-      </div>
-      <FileFolderContent items={filteredFiles} type="file" />
+    <div className="files-page">
+      <h1>File Management</h1>
+      {error && <p className="error">{error}</p>}
+      {files.length > 0 ? (
+        <table className="files-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Size (KB)</th>
+              <th>Uploaded Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {files.map((file, index) => (
+              <tr key={index}>
+                <td>{file.name}</td> {/* File name */}
+                <td>{(file.size / 1024).toFixed(2)} KB</td> {/* Size in KB */}
+                <td>{new Date(file.created_at).toLocaleString()}</td> {/* Upload date */}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        !error && <p>No files available.</p>
+      )}
     </div>
   );
 };
+
 export default FilesPage;
