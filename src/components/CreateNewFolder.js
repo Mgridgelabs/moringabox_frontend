@@ -16,7 +16,7 @@ const CreateFolder = () => {
     try {
       const token = localStorage.getItem("token"); // JWT stored in localStorage
       const response = await axios.post(
-        "/api/folders/create",
+        "https:cloudy-wiwu.onrender.com/api/folders/create",
         { name: folderName },
         {
           headers: {
