@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import FolderCards from './FolderCards';
 import './Home.css';
 import supabase from '../supabase'; // Import the Supabase client
@@ -62,6 +62,64 @@ function Home() {
     fetchFolders();
   }, []);
 
+  // Rename Folder
+  const renameFolder = async (id, newName) => {
+    try {
+      const token = localStorage.getItem('token');
+  
+      // Send the request to the backend
+      const response = await axios.put(
+        `https://cloudy-wiwu.onrender.com/api/folders/update_name/${id}`,
+        { new_name: newName }, // Use "new_name" as required by the API
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+  
+      // Update the folders state optimistically
+      setFolders((prevFolders) =>
+        prevFolders.map((folder) =>
+          folder.id === id ? { ...folder, name: response.data.new_name } : folder
+        )
+      );
+    } catch (err) {
+      console.error('Failed to rename folder:', err);
+  
+      // Display appropriate error to the user
+      if (err.response && err.response.status === 404) {
+        alert('Folder not found or access denied');
+      } else if (err.response && err.response.status === 400) {
+        alert('New folder name is required');
+      } else {
+        alert('An unexpected error occurred. Please try again.');
+      }
+    }
+  };
+
+  const deleteFolder = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`https://cloudy-wiwu.onrender.com/api/folders/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      // Update the folders state after deletion
+      setFolders((prevFolders) => prevFolders.filter((folder) => folder.id !== id));
+      alert('Folder deleted successfully!');
+    } catch (err) {
+      console.error('Failed to delete folder:', err);
+  
+      // Show appropriate error message
+      if (err.response && err.response.status === 404) {
+        alert('Folder not found or access denied');
+      } else {
+        alert('An unexpected error occurred. Please try again.');
+      }
+    }
+  };
+  
+  
+
   return (
     <div className="home-Content">
       <h1 id="home-Title">Welcome To Drive</h1>
@@ -76,7 +134,14 @@ function Home() {
             <p>{foldersError}</p>
           ) : folders.length > 0 ? (
             folders.map((folder) => (
-              <FolderCards key={folder.id} folderName={folder.name} />
+              <FolderCards
+                key={folder.id}
+                folderName={folder.name}
+                folderId={folder.id}
+                onRename={renameFolder}
+                onDelete={deleteFolder}
+              />
+
             ))
           ) : (
             <p>No Folders Found</p>
