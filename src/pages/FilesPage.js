@@ -15,7 +15,7 @@ const FilesPage = () => {
         .list('files', {
           // Optional: You can specify directory, file filtering, etc.
           limit: 10,   // Limit the number of files if needed
-          offset: 0,   // Offset for pagination
+          offset: 0,   
         });
 
       if (error) {
