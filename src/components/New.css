@@ -1,190 +1,256 @@
-/* General Styles */
+/* Upload Page Styles */
 .upload-page {
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  background-color: #f9f9f9;
-  min-height: 100vh;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  padding: 32px;
 }
 
 .upload-container {
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 700px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  max-width: 800px;
+  padding: 32px;
 }
 
-/* Header Section */
+.upload-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
 .upload-header h2 {
   font-size: 24px;
-  color: #333333;
-  margin: 0;
+  font-weight: 600;
+  color: #333;
 }
 
 .upload-header p {
-  font-size: 14px;
-  color: #666666;
-  margin: 0;
+  font-size: 16px;
+  color: #666;
 }
 
-/* File Input Section */
 .file-input-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  text-align: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.file-input-label {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.file-input-label:hover {
+  background-color: #0056b3;
 }
 
 .file-input {
   display: none;
 }
 
-.file-input-container label {
-  display: block;
-  background-color: #e3e3e3;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px dashed #cccccc;
-  cursor: pointer;
-  font-size: 14px;
-  color: #333333;
+.selected-files-preview {
+  margin-bottom: 24px;
 }
 
-.upload-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.upload-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.upload-button:hover:not(:disabled) {
-  background-color: #45a049;
-}
-
-/* Selected Files Preview */
-.selected-files-preview,
-.recent-uploads {
-  margin-top: 20px;
-}
-
-.selected-file-item,
-.recent-file-item {
+.selected-file-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  background-color: #f7f7f7;
+  padding: 12px;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  margin-bottom: 12px;
 }
 
 .file-details {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  font-size: 14px;
-  color: #333333;
+  flex-grow: 1;
+  margin-left: 16px;
 }
 
 .file-details span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.file-type-icon {
-  margin-right: 10px;
-  font-size: 18px;
+  display: block;
+  font-size: 14px;
+  color: #666;
 }
 
 .upload-progress {
-  position: relative;
-  flex-grow: 1;
-  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
 }
 
 .progress-bar {
   height: 8px;
-  background-color: #4caf50;
+  background-color: #007bff;
   border-radius: 4px;
 }
 
 .upload-status {
-  font-size: 12px;
-  text-transform: capitalize;
+  margin-left: 16px;
+  font-size: 14px;
 }
 
-.upload-status.completed {
-  color: #4caf50;
+.upload-status.pending {
+  color: #666;
 }
 
 .upload-status.uploading {
-  color: #ff9800;
+  color: #007bff;
+}
+
+.upload-status.success {
+  color: #28a745;
+  font-weight: 500;
 }
 
 .upload-status.failed {
-  color: #f44336;
+  color: #dc3545;
+  font-weight: 500;
 }
 
-.cancel-upload {
-  background-color: transparent;
-  color: #f44336;
+.recent-uploads {
+  margin-top: 24px;
+}
+
+.recent-file-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  margin-bottom: 12px;
+}
+
+.recent-file-item .file-details span {
+  display: block;
+  font-size: 14px;
+  color: #666;
+}
+
+.create-folder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  padding: 16px;
+  margin-top: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.create-folder input {
+  flex-grow: 1;
   border: none;
+  background-color: transparent;
+  font-size: 16px;
+  margin-right: 16px;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.create-folder input:focus {
+  background-color: #e6e6e6;
+  outline: none;
+}
+
+.create-folder button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 14px;
   cursor: pointer;
-  font-size: 12px;
+  transition: background-color 0.3s ease;
 }
 
-.cancel-upload:hover {
-  text-decoration: underline;
+.create-folder button:hover {
+  background-color: #0056b3;
 }
 
-/* Responsive Design */
+.upload-button {
+  background-color: #673ab7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+  background-color: #512da8;
+}
+
+.upload-button:active {
+  background-color: #4527a0;
+}
+
 @media (max-width: 768px) {
+  .upload-page {
+    padding: 16px;
+  }
+
   .upload-container {
-    width: 90%;
-    padding: 15px;
+    padding: 24px;
   }
 
-  .file-details span {
-    max-width: 100px;
-  }
-}
-
-@media (max-width: 480px) {
   .upload-header h2 {
     font-size: 20px;
   }
 
-  .upload-button {
-    font-size: 12px;
-    padding: 8px 10px;
+  .upload-header p {
+    font-size: 14px;
   }
 
-  .file-details span {
-    max-width: 80px;
+  .file-input-label {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .selected-file-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .file-details {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+
+  .upload-progress {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+
+  .upload-status {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+
+  .create-folder {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px;
+  }
+
+  .create-folder input {
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+
+  .upload-button {
+    font-size: 14px;
+    padding: 10px 20px;
   }
 }
-
