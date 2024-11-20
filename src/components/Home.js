@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import FolderCards from './FolderCards';
-import FileRows from './FileRows';
 import './Home.css';
-import axios from 'axios';
+import supabase from '../supabase'; // Import the Supabase client
+import axios from 'axios'; // Add the axios import
+
 function Home() {
   const [files, setFiles] = useState([]);
   const [folders, setFolders] = useState([]);
@@ -14,18 +15,30 @@ function Home() {
     const fetchFiles = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(
-          'https://cloudy-wiwu.onrender.com/api/recents/files',
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setFiles(response.data.recent_files);
+        if (!token) {
+          setFilesError('User not logged in. Please log in to view files.');
+          return;
+        }
+
+        const { data, error } = await supabase
+          .storage
+          .from('bucket') // Replace 'bucket' with your actual bucket name
+          .list('files', {
+            limit: 10, // Limit the number of files if needed
+            offset: 0,
+          });
+
+        if (error) {
+          setFilesError(error.message);
+        } else {
+          setFiles(data);
+          setFilesError(''); // Clear any previous errors
+        }
       } catch (err) {
-        console.error(err);
-        setFilesError('Failed to fetch files');
+        setFilesError('Failed to fetch files.');
       }
     };
+
     fetchFiles();
   }, []);
 
@@ -143,8 +156,8 @@ function Home() {
               <tr>
                 <th className="file-icon"></th>
                 <th className="file-name">Name</th>
-                <th className="file-location">Location</th>
-                <th className="file-options"></th>
+                <th className="file-location">Size (KB)</th>
+                <th className="file-options">Uploaded Date</th>
               </tr>
             </thead>
             <tbody>
@@ -153,7 +166,14 @@ function Home() {
                   <td colSpan="4">{filesError}</td>
                 </tr>
               ) : files.length > 0 ? (
-                files.map((file) => <FileRows key={file.id} file={file} />)
+                files.map((file, index) => (
+                  <tr key={index}>
+                    <td></td> {/* Placeholder for file icon */}
+                    <td>{file.name}</td>
+                    <td>{(file.size / 1024).toFixed(2)} KB</td>
+                    <td>{new Date(file.created_at).toLocaleString()}</td>
+                  </tr>
+                ))
               ) : (
                 <tr>
                   <td colSpan="4">No Files Uploaded</td>
@@ -168,3 +188,4 @@ function Home() {
 }
 
 export default Home;
+
