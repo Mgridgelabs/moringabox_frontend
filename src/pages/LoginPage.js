@@ -22,7 +22,7 @@ function LoginPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,10 +33,12 @@ function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('token', data.access_token); // Store token
-        navigate('/dashboard'); // Navigate to the protected dashboard page
+        // Store token in localStorage
+        localStorage.setItem('token', data.access_token);
+        // Redirect to dashboard
+        navigate('/dashboard');
       } else {
-        setError(data.error);
+        setError(data.error || 'Login failed. Please check your credentials.');
       }
     } catch (err) {
       setError('Something went wrong. Please try again later.');
@@ -77,7 +79,10 @@ function LoginPage() {
             <button type="submit" id="login-button">Login</button>
           </form>
           <p id="register-route">
-            Don’t have an account? <span id="registerLink" onClick={handleRegisterClick}>Register Now</span>
+            Don’t have an account?{' '}
+            <span id="registerLink" onClick={handleRegisterClick}>
+              Register Now
+            </span>
           </p>
         </div>
       </div>
