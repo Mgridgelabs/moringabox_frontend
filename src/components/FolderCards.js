@@ -3,14 +3,16 @@ import Folder_icon from '../assets/folder_icon.png';
 import more_vert from '../assets/more_vert.png';
 import './FolderCards.css';
 
-function FolderCards({ folderName }) {
+function FolderCards({ folderName, folderId, onRename }) {
   const [showOptions, setShowOptions] = useState(false);
-  const dropdownRef = useRef(null);  // Reference to the dropdown
-  const buttonRef = useRef(null);     // Reference to the more_vert button
+  const [isRenaming, setIsRenaming] = useState(false);
+  const [newName, setNewName] = useState(folderName);
+  const dropdownRef = useRef(null);
+  const buttonRef = useRef(null);
 
   // Toggle the dropdown visibility
   const toggleOptions = (e) => {
-    e.stopPropagation();  // Prevents the event from propagating to the document
+    e.stopPropagation();
     setShowOptions((prev) => !prev);
   };
 
@@ -18,21 +20,26 @@ function FolderCards({ folderName }) {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        dropdownRef.current && !dropdownRef.current.contains(event.target) && 
+        dropdownRef.current && !dropdownRef.current.contains(event.target) &&
         buttonRef.current && !buttonRef.current.contains(event.target)
       ) {
         setShowOptions(false);
       }
     };
 
-    // Add event listener for clicks outside
     document.addEventListener('click', handleClickOutside);
-
-    // Clean up the event listener on component unmount
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
   }, []);
+
+  const handleRename = () => {
+    if (newName.trim() && newName !== folderName) {
+      onRename(folderId, newName);
+    }
+    setIsRenaming(false);
+    setShowOptions(false);
+  };
 
   return (
     <div className="folderCard">
@@ -42,14 +49,34 @@ function FolderCards({ folderName }) {
         alt="more vert"
         className="more-vert-icon"
         onClick={toggleOptions}
-        ref={buttonRef} // Reference for the button to stop event propagation
+        ref={buttonRef}
       />
-      <p className="folderName">{folderName}</p>
-
-      {/* Dropdown menu for options */}
+      {isRenaming ? (
+        <input
+          type="text"
+          className="rename-input"
+          value={newName}
+          onChange={(e) => setNewName(e.target.value)}
+          onBlur={handleRename}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleRename();
+            if (e.key === 'Escape') setIsRenaming(false);
+          }}
+        />
+      ) : (
+        <p className="folderName">{folderName}</p>
+      )}
       {showOptions && (
         <div className="options-dropdown" ref={dropdownRef}>
-          <button className="rename-option">Rename</button>
+          <button
+            className="rename-option"
+            onClick={() => {
+              setIsRenaming(true);
+              setShowOptions(false);
+            }}
+          >
+            Rename
+          </button>
           <button className="delete-option">Delete</button>
         </div>
       )}
