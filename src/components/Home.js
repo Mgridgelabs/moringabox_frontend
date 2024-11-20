@@ -82,6 +82,29 @@ function Home() {
       }
     }
   };
+
+  const deleteFolder = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`https://cloudy-wiwu.onrender.com/api/folders/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      // Update the folders state after deletion
+      setFolders((prevFolders) => prevFolders.filter((folder) => folder.id !== id));
+      alert('Folder deleted successfully!');
+    } catch (err) {
+      console.error('Failed to delete folder:', err);
+  
+      // Show appropriate error message
+      if (err.response && err.response.status === 404) {
+        alert('Folder not found or access denied');
+      } else {
+        alert('An unexpected error occurred. Please try again.');
+      }
+    }
+  };
+  
   
 
   return (
@@ -103,7 +126,9 @@ function Home() {
                 folderName={folder.name}
                 folderId={folder.id}
                 onRename={renameFolder}
+                onDelete={deleteFolder}
               />
+
             ))
           ) : (
             <p>No Folders Found</p>

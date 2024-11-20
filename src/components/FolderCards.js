@@ -1,22 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Folder_icon from '../assets/folder_icon.png';
 import more_vert from '../assets/more_vert.png';
 import './FolderCards.css';
 
-function FolderCards({ folderName, folderId, onRename }) {
+function FolderCards({ folderName, folderId, onRename, onDelete }) {
   const [showOptions, setShowOptions] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);
   const [newName, setNewName] = useState(folderName);
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
 
-  // Toggle the dropdown visibility
   const toggleOptions = (e) => {
     e.stopPropagation();
     setShowOptions((prev) => !prev);
   };
 
-  // Close the dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -77,7 +75,15 @@ function FolderCards({ folderName, folderId, onRename }) {
           >
             Rename
           </button>
-          <button className="delete-option">Delete</button>
+          <button
+            className="delete-option"
+            onClick={() => {
+              const confirmDelete = window.confirm(`Are you sure you want to delete "${folderName}"?`);
+              if (confirmDelete) onDelete(folderId);
+            }}
+          >
+            Delete
+          </button>
         </div>
       )}
     </div>
