@@ -9,13 +9,22 @@ import {
   Music, 
   UploadCloud 
 } from 'lucide-react';
-import CreateFolder from './CreateNewFolder'
+import CreateFolder from './CreateNewFolder';
 
 const New = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [recentFiles, setRecentFiles] = useState([]);
   const [uploadProgress, setUploadProgress] = useState({});
   const [uploadStatus, setUploadStatus] = useState({});
+
+  // Axios interceptor for debugging
+  axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      console.error('Axios Error:', error.response || error.message);
+      return Promise.reject(error);
+    }
+  );
 
   // File selection handler
   const handleFileSelect = (event) => {
@@ -25,7 +34,7 @@ const New = () => {
 
   // Get icon based on file type
   const getFileIcon = (file) => {
-    const type = file.type;
+    const type = file.type || ''; // Ensure type is a string
     if (type.startsWith('image/')) return <Image className="file-type-icon image" />;
     if (type.startsWith('video/')) return <Video className="file-type-icon video" />;
     if (type.startsWith('audio/')) return <Music className="file-type-icon audio" />;
@@ -44,78 +53,70 @@ const New = () => {
 
   // Upload individual file
   const uploadFile = async (file) => {
+    const token = localStorage.getItem('token'); // Fetch the token from localStorage
+  
     const formData = new FormData();
     formData.append('file', file);
-
+  
     try {
-      const response = await axios.post('https://cloudy-wiwu.onrender.com/api/upload/upload_file', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          );
-
-          setUploadProgress((prev) => ({
-            ...prev,
-            [file.name]: percentCompleted
-          }));
-
-          setUploadStatus((prev) => ({
-            ...prev,
-            [file.name]: percentCompleted === 100 ? 'Completed' : 'Uploading'
-          }));
-        }
-      });
-
-      setRecentFiles((prev) => [
+      const response = await axios.post(
+        'https://cloudy-wiwu.onrender.com/api/upload/upload_file',
+        formData,
         {
-          name: file.name,
-          type: file.type,
-          size: file.size,
-          uploadedAt: new Date(),
-          serverResponse: response.data
-        },
-        ...prev
-      ].slice(0, 5));
-
-      setUploadStatus((prev) => ({
-        ...prev,
-        [file.name]: 'Success'
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`, // Include the JWT token
+          },
+          withCredentials: true, // Required if the backend uses cookies for authentication
+          onUploadProgress: (progressEvent) => {
+            const progress = (progressEvent.loaded / progressEvent.total) * 100;
+            setUploadProgress((prevProgress) => ({
+              ...prevProgress,
+              [file.name]: progress,
+            }));
+          }
+        }
+      );
+      console.log('Upload Successful:', response.data);
+      // Save recent files
+      setRecentFiles((prevFiles) => [
+        ...prevFiles,
+        { ...file, uploadedAt: new Date() },
+      ]);
+      setUploadStatus((prevStatus) => ({
+        ...prevStatus,
+        [file.name]: 'Completed',
       }));
-
-      return response.data;
     } catch (error) {
       console.error('Upload Error:', {
         fileName: file.name,
         errorMessage: error.message,
-        errorResponse: error.response?.data
+        errorResponse: error.response?.data,
       });
-
-      setUploadStatus((prev) => ({
-        ...prev,
-        [file.name]: 'Failed'
+      setUploadStatus((prevStatus) => ({
+        ...prevStatus,
+        [file.name]: 'Failed',
       }));
-
-      throw error;
     }
   };
 
-  // Bulk file upload
-  const handleBulkUpload = async () => {
+  const handleMultipleFileUpload = async () => {
     if (selectedFiles.length === 0) {
       alert('Please select files to upload');
       return;
     }
-
+  
+    // Iterate over selected files and upload each one
     try {
-      for (const file of selectedFiles) {
-        await uploadFile(file);
-      }
-      setSelectedFiles([]);
+      selectedFiles.forEach((file) => {
+        setUploadStatus((prevStatus) => ({
+          ...prevStatus,
+          [file.name]: 'Uploading...',
+        }));
+        uploadFile(file);
+      });
     } catch (error) {
-      console.error('Bulk Upload Failed:', error);
+      console.error('Multiple File Upload Failed:', error);
     }
   };
 
@@ -140,7 +141,7 @@ const New = () => {
             className="file-input" 
           />
           <button 
-            onClick={handleBulkUpload}
+            onClick={handleMultipleFileUpload}
             disabled={selectedFiles.length === 0}
             className="upload-button"
           >
@@ -165,7 +166,7 @@ const New = () => {
                       className="progress-bar" 
                       style={{ width: `${uploadProgress[file.name]}%` }}
                     />
-                    <span>{uploadProgress[file.name]}%</span>
+                    <span>{uploadProgress[file.name].toFixed(2)}%</span>
                   </div>
                 )}
                 <span className={`upload-status ${uploadStatus[file.name]?.toLowerCase()}`}>
@@ -193,7 +194,7 @@ const New = () => {
           </div>
         )}
       </div>
-      <CreateFolder />
+      <CreateFolder /> {/* Keep the Create Folder component */}
     </div>
   );
 };
