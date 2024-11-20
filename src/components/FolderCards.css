@@ -19,7 +19,7 @@
     margin-top: 5px;
     margin-left: 12px;
 }
-.more-vert-icon {
+.more-vert-icon1 {
     width: 4.52px;
     height: 18.09px;
     margin-left: 10px;
@@ -40,7 +40,7 @@
   }
   
   
-.options-dropdown {
+.options-dropdown1 {
     position: absolute;
     top: 0;
     right: -120px; /* Adjust this to position the dropdown where you like */
@@ -52,7 +52,7 @@
 }
   
 
-.options-dropdown button {
+.options-dropdown1 button {
     background: none;
     border: none;
     padding: 10px;
@@ -62,7 +62,7 @@
     color: #333;
 }
 
-.options-dropdown button:hover {
+.options-dropdown1 button:hover {
     background-color: #f1f1f1;
 }
 

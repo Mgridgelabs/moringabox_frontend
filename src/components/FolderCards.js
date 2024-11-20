@@ -45,7 +45,7 @@ function FolderCards({ folderName, folderId, onRename, onDelete }) {
       <img
         src={more_vert}
         alt="more vert"
-        className="more-vert-icon"
+        className="more-vert-icon1"
         onClick={toggleOptions}
         ref={buttonRef}
       />
@@ -65,7 +65,7 @@ function FolderCards({ folderName, folderId, onRename, onDelete }) {
         <p className="folderName">{folderName}</p>
       )}
       {showOptions && (
-        <div className="options-dropdown" ref={dropdownRef}>
+        <div className="options-dropdown1" ref={dropdownRef}>
           <button
             className="rename-option"
             onClick={() => {

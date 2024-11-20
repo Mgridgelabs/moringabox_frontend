@@ -1,0 +1,55 @@
+.trash-container {
+    padding: 20px;
+  }
+  
+  .trashed-folders {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .trashed-folder-card {
+    position: relative;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .trashed-folder-card button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .options-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .options-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+  
+  .options-dropdown button:hover {
+    background: #f0f0f0;
+  }
+  
