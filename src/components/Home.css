@@ -64,6 +64,7 @@
 
 .files-table th {
     background-color: #f4f4f4;
+    font-weight: bold;
 }
 
 /* .files-table tbody tr:nth-child(odd) {
@@ -71,7 +72,7 @@
 } */
 
 .files-table tbody tr {
-    background-color: #f9f9f9;
+    background-color: #D9D9D999;
 }
 
 /* Media Queries */
