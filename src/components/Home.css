@@ -50,6 +50,8 @@
 .files-table {
     width: 100%;
     border-collapse: collapse;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), -2px -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .files-table th,
@@ -63,9 +65,9 @@
     background-color: #f4f4f4;
 }
 
-.files-table tbody tr:nth-child(odd) {
+/* .files-table tbody tr:nth-child(odd) {
     background-color: #f9f9f9;
-}
+} */
 
 /* Media Queries */
 
