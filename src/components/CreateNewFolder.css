@@ -1,8 +1,16 @@
 .fcContainer {
   margin-left: 150px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }
 .fcBtn {
   width: 100px;
+  height: 20px;
   background-color: #007bff;
   color: white;
+  border-color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 12px;
 }
