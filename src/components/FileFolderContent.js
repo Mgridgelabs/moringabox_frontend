@@ -7,10 +7,10 @@ const FileFolderContent = ({ items, itemType, onItemClick }) => {
       {items.map((item) => (
         <div
           key={item.id}
-          className={`item ${itemType}`}
+          className={`item ${itemType} folder-list3`}
           onClick={() => onItemClick && onItemClick(item)} // Call onItemClick if provided
         >
-          <p>{item.name}</p>
+          <p classname="folder-item3">{item.name}</p>
         </div>
       ))}
     </div>
