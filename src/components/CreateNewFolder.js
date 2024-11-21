@@ -17,7 +17,7 @@ const CreateFolder = () => {
     try {
       const token = localStorage.getItem("token"); // JWT stored in localStorage
       const response = await axios.post(
-        "https:cloudy-wiwu.onrender.com/api/folders/create",
+        "https://cloudy-wiwu.onrender.com/api/folders/create",
         { name: folderName },
         {
           headers: {
@@ -26,15 +26,17 @@ const CreateFolder = () => {
           },
         }
       );
-      setMessage(`Folder created successfully! ID: ${response.data.folder_id}`);
+      setMessage(`Folder created successfully!`);
       setFolderName("");
     } catch (error) {
-      if (error.response) {
-        setMessage(`Error: ${error.response.data.error}`);
-      } else {
-        setMessage("An unexpected error occurred");
+        if (error.response) {
+          console.log(error.response.data); // Debugging: Log full error response
+          setMessage(`Error: ${error.response.data.error || "Something went wrong!"}`);
+        } else {
+          console.log(error); // Log unexpected errors
+          setMessage("An unexpected error occurred");
+        }
       }
-    }
   };
 
   const toggleFormVisibility = () => {
