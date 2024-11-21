@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import supabase from "../supabase"; // Import the Supabase client
 import "./FilesPage.css";
+import axios from 'axios';
 
 const FilesPage = () => {
   const [files, setFiles] = useState([]);
+  const [foldersError, setFoldersError] = useState("");
   const [folders, setFolders] = useState([]); // State to store folders
   const [error, setError] = useState("");
   const [renameFileName, setRenameFileName] = useState("");
