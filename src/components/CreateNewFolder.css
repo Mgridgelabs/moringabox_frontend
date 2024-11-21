@@ -7,6 +7,7 @@
   justify-content: space-between;
   gap: 10px;
 }
+
 .fcBtn {
   width: 100px;
   padding: 8px;
@@ -18,13 +19,16 @@
   font-size: 12px;
   border-radius: 4px;
 }
+
 .fcBtn:hover {
   background-color: #0056b3;
 }
+
 .fcContainer form {
   display: flex;
   flex-direction: column;
 }
+
 .fcContainer input {
   flex-grow: 1;
   width: 200px;
@@ -37,13 +41,52 @@
   margin-left: -40px;
   margin-bottom: 10px;
 }
+
 .fcContainer input:focus {
   background-color: #e6e6e6;
   outline: none;
 }
+
 .fcSubmit {
   width: 80px;
   padding: 4px;
   background-color: #006400;
   margin-left: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .fcContainer {
+    margin-left: 20px;
+    margin-top: 0;
+    padding: 10px;
+    gap: 15px;
+  }
+
+  .fcContainer input {
+    width: 100%; /* Adjust input width to fit the container */
+    margin-left: 0; /* Remove negative margin for smaller screens */
+  }
+
+  .fcBtn, .fcSubmit {
+    width: 100%; /* Make buttons full width on smaller screens */
+    font-size: 14px; /* Slightly larger font for better readability */
+    text-align: center; /* Center-align button text */
+  }
+}
+
+@media (max-width: 480px) {
+  .fcContainer {
+    padding: 5px;
+  }
+
+  .fcContainer input {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .fcBtn, .fcSubmit {
+    padding: 6px;
+    font-size: 12px;
+  }
 }
