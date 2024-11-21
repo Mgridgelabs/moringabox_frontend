@@ -1,8 +1,10 @@
 .fcContainer {
-  margin-left: 150px;
+  margin-left: 200px;
   display: flex;
   flex-direction: column;
   padding: 10px;
+  justify-content: space-between;
+  gap: 10px;
 }
 .fcBtn {
   width: 100px;
