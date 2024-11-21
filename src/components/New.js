@@ -243,7 +243,10 @@ const New = () => {
             ))}
           </div>
         )}
-
+        <div className="upload-header">
+          <h2>Create Folders</h2>
+          <p>Click to create a folder</p>
+        </div>
         <CreateFolder /> {/* Create Folder component */}
       </div>
     </div>
