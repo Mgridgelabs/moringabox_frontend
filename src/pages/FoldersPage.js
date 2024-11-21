@@ -3,7 +3,6 @@ import FileFolderContent from "../components/FileFolderContent";
 import "./FoldersPage.css";
 import { Folder } from "lucide-react";
 import back2 from "../assets/back_img.png"
-import more_vert from "../assets/more_vert.png"
 import axios from "axios";
 
 const FoldersPage = () => {
