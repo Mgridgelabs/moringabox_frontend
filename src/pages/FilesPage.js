@@ -231,7 +231,7 @@ const FilesPage = () => {
                         </option>
                       ))}
                     </select>
-                    <button onClick={() => handleMoveFile(file.name)}>
+                    <button onClick={() => handleMoveFile(file.id)}>
                       Move to Folder
                     </button>
                     <button onClick={() => handleDownloadFile(file.name)}>
