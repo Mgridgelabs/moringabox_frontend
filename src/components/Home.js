@@ -1,4 +1,4 @@
-React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FolderCards from './FolderCards';
 import './Home.css';
 import supabase from '../supabase'; // Import the Supabase client
