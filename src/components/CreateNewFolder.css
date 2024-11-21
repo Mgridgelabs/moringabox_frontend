@@ -6,11 +6,32 @@
 }
 .fcBtn {
   width: 100px;
-  height: 20px;
+  padding: 16px;
   background-color: #007bff;
   color: white;
   border-color: #007bff;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 12px;
+  border-radius: 4px;
+}
+.fcBtn:hover {
+  background-color: #0056b3;
+}
+.fcContainer form {
+  display: flex;
+  flex-direction: column;
+}
+.fcContainer input {
+  flex-grow: 1;
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.fcContainer input:focus {
+  background-color: #e6e6e6;
+  outline: none;
 }
