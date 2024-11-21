@@ -27,7 +27,7 @@
 }
 .fcContainer input {
   flex-grow: 1;
-  width: 100px;
+  width: 200px;
   border: 1px solid #e6e6e6;
   background-color: transparent;
   font-size: 14px;
