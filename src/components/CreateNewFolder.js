@@ -57,7 +57,7 @@ const CreateFolder = () => {
               required
             />
           </label>
-          <button type="submit" className="fcSumbit">Create</button>
+          <button type="submit" className="fcSubmit">Create</button>
         </form>
       )}
       {message && <p>{message}</p>}
