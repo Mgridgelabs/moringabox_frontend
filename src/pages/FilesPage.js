@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import supabase from "../supabase"; // Import the Supabase client
 import "./FilesPage.css";
-import axios from 'axios';
+import axios from "axios";
 
 const FilesPage = () => {
   const [files, setFiles] = useState([]);
@@ -10,7 +10,7 @@ const FilesPage = () => {
   const [error, setError] = useState("");
   const [renameFileName, setRenameFileName] = useState("");
   const [newFileName, setNewFileName] = useState("");
-  const [selectedFolder, setSelectedFolder] = useState("");
+  const [selectedFolder, setSelectedFolder] = useState(""); // Folder ID
   const token = localStorage.getItem("token");
 
   // Fetch files from Supabase
@@ -34,32 +34,30 @@ const FilesPage = () => {
     }
   };
 
-// Fetch folders from the API endpoint
-const fetchFolders = async () => {
-  try {
-    const token = localStorage.getItem('token');
-    const response = await axios.get(
-      'https://cloudy-wiwu.onrender.com/api/recents/folders',
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    setFolders(response.data.recent_folders);
-  } catch (err) {
-    console.error(err);
-    setFoldersError('Failed to fetch folders');
-  }
-};
+  // Fetch folders from the API endpoint
+  const fetchFolders = async () => {
+    try {
+      const response = await axios.get(
+        "https://cloudy-wiwu.onrender.com/api/recents/folders",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setFolders(response.data.recent_folders);
+    } catch (err) {
+      console.error(err);
+      setFoldersError("Failed to fetch folders");
+    }
+  };
 
-useEffect(() => {
-  if (token) {
-    fetchFiles();
-    fetchFolders(); // Now accessible since it's defined globally
-  } else {
-    setError("User not logged in. Please log in to view files.");
-  }
-}, [token]);
-
+  useEffect(() => {
+    if (token) {
+      fetchFiles();
+      fetchFolders();
+    } else {
+      setError("User not logged in. Please log in to view files.");
+    }
+  }, [token]);
 
   // Handle file double-click to view
   const handleFileDoubleClick = async (fileName) => {
@@ -82,32 +80,31 @@ useEffect(() => {
 
   // Handle moving file to a selected folder
   const handleMoveFile = async (fileId) => {
-  if (!selectedFolder) {
-    alert("Please select a folder to move the file.");
-    return;
-  }
-
-  try {
-    const response = await axios.put(
-      `https://cloudy-wiwu.onrender.com/api/files/move/${fileId}`,
-      { new_folder_id: selectedFolder }, // Send the selected folder ID
-      {
-        headers: { Authorization: `Bearer ${token}` }, // Include the token for authentication
-      }
-    );
-
-    if (response.status === 200) {
-      alert("File moved successfully!");
-      fetchFiles(); // Refresh the file list after moving the file
-    } else {
-      alert(response.data.error || "Failed to move file.");
+    if (!selectedFolder) {
+      alert("Please select a folder to move the file.");
+      return;
     }
-  } catch (err) {
-    console.error(err);
-    alert(err.response?.data?.error || "An error occurred while moving the file.");
-  }
-};
 
+    try {
+      const response = await axios.put(
+        `https://cloudy-wiwu.onrender.com/api/files/move/${fileId}`,
+        { new_folder_id: selectedFolder }, // Send the selected folder ID
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (response.status === 200) {
+        alert("File moved successfully!");
+        fetchFiles(); // Refresh the file list after moving the file
+      } else {
+        alert(response.data.error || "Failed to move file.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.error || "An error occurred while moving the file.");
+    }
+  };
 
   const handleRenameFile = async () => {
     if (!renameFileName || !newFileName) {
@@ -190,15 +187,6 @@ useEffect(() => {
     }
   };
 
-  useEffect(() => {
-    if (token) {
-      fetchFiles();
-      fetchFolders(); // Fetch folders on mount
-    } else {
-      setError("User not logged in. Please log in to view files.");
-    }
-  }, [token]);
-
   return (
     <div className="files-page">
       <h1>File Management</h1>
@@ -238,7 +226,7 @@ useEffect(() => {
                         Select Folder
                       </option>
                       {folders.map((folder) => (
-                        <option key={folder.id} value={folder.name}>
+                        <option key={folder.id} value={folder.id}>
                           {folder.name}
                         </option>
                       ))}
