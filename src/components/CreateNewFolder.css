@@ -6,7 +6,7 @@
 }
 .fcBtn {
   width: 100px;
-  padding: 16px;
+  padding: 8px;
   background-color: #007bff;
   color: white;
   border-color: #007bff;
@@ -24,7 +24,7 @@
 }
 .fcContainer input {
   flex-grow: 1;
-  border: none;
+  border: 1px solid #e6e6e6;
   background-color: transparent;
   font-size: 14px;
   padding: 8px;
