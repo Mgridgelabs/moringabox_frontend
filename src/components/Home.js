@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import FolderCards from './FolderCards';
 import './Home.css';
-import supabase from '../supabase'; // Import the Supabase client
-import axios from 'axios'; // Add the axios import
+import supabase from '../supabase';
+import axios from 'axios';
 
 function Home() {
   const [files, setFiles] = useState([]);
@@ -10,7 +10,6 @@ function Home() {
   const [filesError, setFilesError] = useState('');
   const [foldersError, setFoldersError] = useState('');
 
-  // Fetch Files
   useEffect(() => {
     const fetchFiles = async () => {
       try {
@@ -22,9 +21,9 @@ function Home() {
 
         const { data, error } = await supabase
           .storage
-          .from('bucket') // Replace 'bucket' with your actual bucket name
+          .from('bucket')
           .list('files', {
-            limit: 10, // Limit the number of files if needed
+            limit: 10,
             offset: 0,
           });
 
@@ -32,7 +31,7 @@ function Home() {
           setFilesError(error.message);
         } else {
           setFiles(data);
-          setFilesError(''); // Clear any previous errors
+          setFilesError('');
         }
       } catch (err) {
         setFilesError('Failed to fetch files.');
@@ -42,7 +41,6 @@ function Home() {
     fetchFiles();
   }, []);
 
-  // Fetch Folders
   useEffect(() => {
     const fetchFolders = async () => {
       try {
@@ -62,71 +60,27 @@ function Home() {
     fetchFolders();
   }, []);
 
-  // Rename Folder
-  const renameFolder = async (id, newName) => {
+  // Handle the drop event to move the file to a new folder
+  const handleFileMove = async (fileId, folderId) => {
     try {
       const token = localStorage.getItem('token');
-  
-      // Send the request to the backend
       const response = await axios.put(
-        `https://cloudy-wiwu.onrender.com/api/folders/update_name/${id}`,
-        { new_name: newName }, // Use "new_name" as required by the API
+        `https://cloudy-wiwu.onrender.com/api/folders/move_file/${fileId}`,
+        { new_folder_id: folderId },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-  
-      // Update the folders state optimistically
-      setFolders((prevFolders) =>
-        prevFolders.map((folder) =>
-          folder.id === id ? { ...folder, name: response.data.new_name } : folder
-        )
-      );
+      alert('File moved successfully');
     } catch (err) {
-      console.error('Failed to rename folder:', err);
-  
-      // Display appropriate error to the user
-      if (err.response && err.response.status === 404) {
-        alert('Folder not found or access denied');
-      } else if (err.response && err.response.status === 400) {
-        alert('New folder name is required');
-      } else {
-        alert('An unexpected error occurred. Please try again.');
-      }
+      console.error('Failed to move file:', err);
+      alert('An error occurred while moving the file.');
     }
   };
-
-  const deleteFolder = async (id) => {
-    try {
-      const token = localStorage.getItem('token');
-      await axios.delete(`https://cloudy-wiwu.onrender.com/api/folders/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-  
-      // Update the folders state after deletion
-      setFolders((prevFolders) => prevFolders.filter((folder) => folder.id !== id));
-      alert('Folder deleted successfully!');
-    } catch (err) {
-      console.error('Failed to delete folder:', err);
-  
-      // Show appropriate error message
-      if (err.response && err.response.status === 404) {
-        alert('Folder not found or access denied');
-      } else {
-        alert('An unexpected error occurred. Please try again.');
-      }
-    }
-  };
-  
-  
 
   return (
     <div className="home-Content">
       <h1 id="home-Title">Welcome To Drive</h1>
-      <div className="searchDiv">
-        <h2 id="search-title">Search</h2>
-        <input name="search field" placeholder="search text" />
-      </div>
       <div className="foldersDiv">
         <h1 id="folders-title">Folders</h1>
         <div className="folder-cards">
@@ -140,8 +94,8 @@ function Home() {
                 folderId={folder.id}
                 onRename={renameFolder}
                 onDelete={deleteFolder}
+                onDrop={handleFileMove} // Pass the file move function to FolderCards
               />
-
             ))
           ) : (
             <p>No Folders Found</p>
@@ -167,8 +121,14 @@ function Home() {
                 </tr>
               ) : files.length > 0 ? (
                 files.map((file, index) => (
-                  <tr key={index}>
-                    <td></td> {/* Placeholder for file icon */}
+                  <tr
+                    key={index}
+                    draggable
+                    onDragStart={(e) => {
+                      e.dataTransfer.setData('fileId', file.id);
+                    }}
+                  >
+                    <td></td>
                     <td>{file.name}</td>
                     <td>{(file.size / 1024).toFixed(2)} KB</td>
                     <td>{new Date(file.created_at).toLocaleString()}</td>
@@ -188,4 +148,3 @@ function Home() {
 }
 
 export default Home;
-
