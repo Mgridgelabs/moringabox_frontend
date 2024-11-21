@@ -10,7 +10,7 @@ const FileFolderContent = ({ items, itemType, onItemClick }) => {
           className={`item ${itemType} folder-list3`}
           onClick={() => onItemClick && onItemClick(item)} // Call onItemClick if provided
         >
-          <p classname="folder-item3">{item.name}</p>
+          <p className="folder-item3">{item.name}</p>
         </div>
       ))}
     </div>
