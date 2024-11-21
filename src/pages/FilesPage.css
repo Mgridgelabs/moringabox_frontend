@@ -47,7 +47,22 @@
 .filters select {
     width: 100px;
 }
-
+#moveBtn {
+    background-color: #007BBF;
+    color: white;
+}
+#downloadBtn {
+    background-color: #2BA745;
+    color: white;
+}
+#renameBtn {
+    background-color: #FFA500;
+    color: white;
+}
+#deleteBtn {
+    background-color: #DC3545;
+    color: white;
+}
 .filters input[type="text"] {
     flex-grow: 1;
 }
