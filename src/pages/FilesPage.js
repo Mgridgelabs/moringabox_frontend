@@ -138,31 +138,20 @@ const FilesPage = () => {
     }
   };
 
-  const handleDeleteToTrash = async (fileName) => {
+  const deleteFile = async (fileName) => {
     try {
-      const targetPath = `trash/${fileName}`; // Move the file to the trash folder
-      const { data: copyData, error: copyError } = await supabase.storage
+      const { error } = await supabase.storage
         .from("bucket")
-        .copy(`files/${fileName}`, targetPath);
+        .remove([`files/${fileName}`]); // Delete the file from the storage bucket
 
-      if (copyError || !copyData) {
-        alert("Failed to move the file to trash.");
-        console.error(copyError || "No data returned from copy");
-        return;
-      }
-
-      const { error: deleteError } = await supabase.storage
-        .from("bucket")
-        .remove([`files/${fileName}`]);
-
-      if (deleteError) {
-        alert("Failed to delete the original file.");
-        console.error(deleteError);
+      if (error) {
+        alert("Failed to delete the file.");
+        console.error(error);
         return;
       }
 
       fetchFiles();
-      alert(`File moved to trash successfully!`);
+      alert(`File ${fileName} deleted successfully!`);
     } catch (err) {
       alert("An error occurred while deleting the file.");
       console.error(err);
@@ -220,9 +209,7 @@ const FilesPage = () => {
                     <button onClick={() => setRenameFileName(file.name)}>
                       Rename
                     </button>
-                    <button onClick={() => handleDeleteToTrash(file.name)}>
-                      Delete to Trash
-                    </button>
+                    <button onClick={() => deleteFile(file.name)}>Delete</button> {/* Delete Button */}
                   </td>
                 </tr>
               ))}
