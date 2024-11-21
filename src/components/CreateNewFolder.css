@@ -27,13 +27,14 @@
 }
 .fcContainer input {
   flex-grow: 1;
+  width: 50px;
   border: 1px solid #e6e6e6;
   background-color: transparent;
   font-size: 14px;
   padding: 8px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
-  margin-left: 10px;
+  margin-left: -40px;
 }
 .fcContainer input:focus {
   background-color: #e6e6e6;
