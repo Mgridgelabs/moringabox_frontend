@@ -54,26 +54,30 @@
 #moveBtn {
     background-color: #007BBF;
     color: white;
-    margin-left: 3px;
+    margin-left: 5px;
     padding: 3px;
+    border: none;
 }
 #downloadBtn {
     background-color: #2BA745;
     color: white;
-    margin-left: 3px;
-    padding: 3px
+    margin-left: 5px;
+    padding: 3px;
+    border: none;
 }
 #renameBtn {
     background-color: #FFA500;
     color: white;
-    margin-left: 3px;
-    padding: 3px
+    margin-left: 5px;
+    padding: 3px;
+    border: none;
 }
 #deleteBtn {
     background-color: #DC3545;
     color: white;
-    margin-left: 3px;
-    padding: 3px
+    margin-left: 5px;
+    padding: 3px;
+    border: none;
 }
 .filters input[type="text"] {
     flex-grow: 1;
