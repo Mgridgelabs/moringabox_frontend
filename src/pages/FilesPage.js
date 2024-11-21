@@ -89,7 +89,7 @@ useEffect(() => {
 
   try {
     const response = await axios.put(
-      `https://cloudy-wiwu.onrender.com/api/move/${fileId}`, // Adjust to the actual base URL
+      `https://cloudy-wiwu.onrender.com/api/files/move/${fileId}`,
       { new_folder_id: selectedFolder }, // Send the selected folder ID
       {
         headers: { Authorization: `Bearer ${token}` }, // Include the token for authentication
