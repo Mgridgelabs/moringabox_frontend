@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import NavBar from '../components/NavBar';
-import background_img1 from '../assets/background_img1.png';
+import background_img1 from '../assets/cool-background.png';
 import trash_img from '../assets/trash_img.png';
 import './Dashboard.css';
 
