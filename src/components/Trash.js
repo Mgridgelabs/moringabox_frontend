@@ -55,7 +55,7 @@ function Trash() {
 
   return (
     <div className="trash-container">
-      <h1>Trash</h1>
+      
       {error && <p className="error">{error}</p>}
 
       <div className="trashed-folders">

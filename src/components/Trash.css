@@ -1,16 +1,25 @@
 .trash-container {
     padding: 20px;
     display: flex;
-    flex-direction: column;
-  }
-  
-  .trashed-folders {
+    flex-direction: row; /* Aligns content in a row */
+    justify-content: space-between; /* Ensures space between the two sections */
+}
+
+.trashed-folders {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column; /* Keeps the folders stacked vertically */
     gap: 20px;
-  }
-  
-  .trashed-folder-card {
+    width: 45%; /* Adjusts the width of the folder section */
+}
+
+.trashed-files {
+    display: flex;
+    flex-direction: column; /* Keeps the files stacked vertically */
+    gap: 20px;
+    width: 45%; /* Adjusts the width of the files section */
+}
+
+.trashed-folder-card {
     position: relative;
     border: 1px solid #ccc;
     padding: 10px;
@@ -18,18 +27,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 250px;
+    width: 100%; /* Ensures the folder card takes the full width of its container */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .trashed-folder-card button {
+}
+
+.trashed-folder-card button {
     background: none;
     border: none;
     font-size: 20px;
     cursor: pointer;
-  }
-  
-  .options-dropdown {
+}
+
+.options-dropdown {
     display: none;
     position: absolute;
     top: 100%;
@@ -39,9 +48,9 @@
     border-radius: 4px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-  }
-  
-  .options-dropdown button {
+}
+
+.options-dropdown button {
     display: block;
     width: 100%;
     padding: 8px;
@@ -49,9 +58,8 @@
     border: none;
     cursor: pointer;
     text-align: left;
-  }
-  
-  .options-dropdown button:hover {
+}
+
+.options-dropdown button:hover {
     background: #f0f0f0;
-  }
-  
+}
