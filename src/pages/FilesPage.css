@@ -2,7 +2,8 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: rgba(216, 227, 222, 0.9); /* Slightly transparent background */
+/*     background-color: rgba(216, 227, 222, 0.9); /* Slightly transparent background */ */
+    background-color: white; /* Slightly transparent background */
     border-radius: 8px;
     max-width: 600px;
     margin: auto;
@@ -50,18 +51,26 @@
 #moveBtn {
     background-color: #007BBF;
     color: white;
+    margin-left: 3px;
+    padding: 3px;
 }
 #downloadBtn {
     background-color: #2BA745;
     color: white;
+    margin-left: 3px;
+    padding: 3px
 }
 #renameBtn {
     background-color: #FFA500;
     color: white;
+    margin-left: 3px;
+    padding: 3px
 }
 #deleteBtn {
     background-color: #DC3545;
     color: white;
+    margin-left: 3px;
+    padding: 3px
 }
 .filters input[type="text"] {
     flex-grow: 1;
