@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from "react";
 import supabase from "../supabase"; // Import the Supabase client
-import './FilesPage.css';
+import "./FilesPage.css";
 
 const FilesPage = () => {
   const [files, setFiles] = useState([]);
-  const [folders, setFolders] = useState([]); // State for folder names
+  const [folders, setFolders] = useState([]); // State to store folders
   const [error, setError] = useState("");
   const [renameFileName, setRenameFileName] = useState("");
   const [newFileName, setNewFileName] = useState("");
+  const [selectedFolder, setSelectedFolder] = useState("");
   const token = localStorage.getItem("token");
 
+  // Fetch files from Supabase
   const fetchFiles = async () => {
     try {
       const { data, error } = await supabase.storage
         .from("bucket") // Replace 'bucket' with your actual bucket name
-        .list("files", { limit: 10, offset: 0 });
+        .list("files", {
+          limit: 10,
+          offset: 0,
+        });
 
       if (error) {
         setError(error.message);
       } else {
-        setFiles(data || []);
+        setFiles(data || []); // Ensure data is an array even if it's null
         setError("");
       }
     } catch (err) {
@@ -27,19 +32,30 @@ const FilesPage = () => {
     }
   };
 
+  // Fetch folders from the API endpoint
   const fetchFolders = async () => {
     try {
-      const { data, error } = await supabase.storage.from("bucket").list("folders");
-      if (error) {
-        console.error("Error fetching folders:", error);
-      } else {
-        setFolders(data || []);
+      const response = await fetch("https://cloudy-wiwu.onrender.com/recents/folders", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch folders. Please try again.");
       }
-    } catch (err) {
-      console.error("An error occurred while fetching folders:", err);
+
+      const data = await response.json();
+      setFolders(data || []); // Update state with the fetched folders
+    } catch (error) {
+      console.error("Error fetching folders:", error);
+      alert(error.message || "An error occurred while fetching folders.");
     }
   };
 
+  // Handle file double-click to view
   const handleFileDoubleClick = async (fileName) => {
     try {
       const { data, error } = await supabase.storage
@@ -58,14 +74,15 @@ const FilesPage = () => {
     }
   };
 
-  const handleMoveFile = async (fileName, targetFolder) => {
-    if (!targetFolder) {
-      alert("Please select a folder.");
+  // Handle moving file to a selected folder
+  const handleMoveFile = async (fileName) => {
+    if (!selectedFolder) {
+      alert("Please select a folder to move the file.");
       return;
     }
 
     try {
-      const targetPath = `folders/${targetFolder}/${fileName}`;
+      const targetPath = `folders/${selectedFolder}/${fileName}`;
       const { data: copyData, error: copyError } = await supabase.storage
         .from("bucket")
         .copy(`files/${fileName}`, targetPath);
@@ -87,7 +104,7 @@ const FilesPage = () => {
       }
 
       fetchFiles();
-      alert(`File moved to ${targetFolder} successfully!`);
+      alert(`File moved to ${selectedFolder} successfully!`);
     } catch (err) {
       alert("An error occurred while moving the file.");
       console.error(err);
@@ -216,31 +233,33 @@ const FilesPage = () => {
                   </td>
                   <td>
                     <select
-                      onChange={(e) => handleMoveFile(file.name, e.target.value)}
-                      defaultValue=""
+                      onChange={(e) => setSelectedFolder(e.target.value)}
+                      value={selectedFolder}
                     >
                       <option value="" disabled>
-                        Move to Folder
+                        Select Folder
                       </option>
-                      {folders.map((folder, index) => (
-                        <option key={index} value={folder.name}>
+                      {folders.map((folder) => (
+                        <option key={folder.id} value={folder.name}>
                           {folder.name}
                         </option>
                       ))}
                     </select>
-                    <button id="downloadBtn" onClick={() => handleDownloadFile(file.name)}>
+                    <button onClick={() => handleMoveFile(file.name)}>
+                      Move to Folder
+                    </button>
+                    <button onClick={() => handleDownloadFile(file.name)}>
                       Download
                     </button>
-                    <button id="renameBtn" onClick={() => setRenameFileName(file.name)}>
+                    <button onClick={() => setRenameFileName(file.name)}>
                       Rename
                     </button>
-                    <button id="deleteBtn" onClick={() => deleteFile(file.name)}>Delete</button>
+                    <button onClick={() => deleteFile(file.name)}>Delete</button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-
           {renameFileName && (
             <div className="rename-modal">
               <h2>Rename File</h2>
