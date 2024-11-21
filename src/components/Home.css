@@ -1,115 +1,114 @@
+/* General styles */
+.home-Content {
+    padding: 20px;
+}
+
 #home-Title {
     text-align: center;
-    font-size: 20px;
-    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: 20px;
 }
-#search-title {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 400;
-    margin-top: 50px;
-}
+
 .searchDiv {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
 }
+
+#search-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
 .searchDiv input {
-    width: 293px;
-    height: 40px;
-    border-radius: 28px;
-    background-color: #ECE6F0;
+    width: 100%;
+    max-width: 500px;
     padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.foldersDiv,
+.filesDiv {
     margin-top: 20px;
 }
-#folders-title {
-    font-size: 18px;
-    font-weight: 400;
-    margin-top: 30px;
-    margin-bottom: 5px;
-}
-.folder-cards {
+
+.folder-cards,
+.files-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    justify-content: flex-start;
+    gap: 20px;
 }
-.filesDiv {
-    background-color: #5C5959C9;
-    height: 450px;
-    margin-top: 10px;
-    border-top-right-radius: 18px;
-    border-top-left-radius: 18px;
+
+.folder-cards>* {
+    flex: 1 1 calc(33.33% - 20px);
+    /* 3 cards per row */
+    min-width: 250px;
+    box-sizing: border-box;
+}
+
+/* Files table */
+.files-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.files-table th,
+.files-table td {
+    border: 1px solid #ccc;
     padding: 10px;
+    text-align: left;
 }
-#files-title {
-    font-size: 16px;
-    color: black;
-    line-height: 16px;
-    font-weight: 400;
-}
-.files-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-}
-.files-table {
-    width: 100%;
-    border-collapse: separate;
-    border-bottom: 1px solid #5C5959C9;
-    border-spacing: 0 10px;
-}
-.files-table th, .files-table td {
-    padding: 5px 15px;
-    text-align: center;
-}
+
 .files-table th {
-    cursor: pointer;
+    background-color: #f4f4f4;
 }
 
-.files-table td:not(:first-child) {
-    cursor: pointer;
-    background-color: #D9D9D9;
-    color: black;
-    font-size: 12px;
-}
-.file-options {
-    text-align: right;
-    margin-left: 100px;
-}
-.file-icon {
-    width: 5%;
-}
-#file_icon {
-    width: 17.45px;
-    height: 23.86px;
-}
-#more_vert {
-    width: 3.02px;
-    height: 11.45px;
-}
-.files-table tbody tr td:nth-child(2) {
-    border-top-left-radius: 8px;
-}
-.files-table tbody tr td:nth-child(4) {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
-.files-table {
-    max-height: 400px; /* Set a max height to trigger scrolling */
-    overflow-y: auto; /* Add vertical scrolling if content exceeds max height */
+.files-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
 }
 
-.files-table::-webkit-scrollbar {
-    width: 5px; /* Set scrollbar width */
+/* Media Queries */
+
+/* Small screens (Mobile: up to 767px) */
+@media (max-width: 767px) {
+    #home-Title {
+        font-size: 1.5rem;
+    }
+
+    .searchDiv input {
+        width: 100%;
+        padding: 8px;
+    }
+
+    .folder-cards>* {
+        flex: 1 1 100%;
+        /* 1 card per row */
+        margin-bottom: 10px;
+    }
+
+    .files-table th,
+    .files-table td {
+        font-size: 0.8rem;
+        padding: 8px;
+    }
 }
 
-.files-table::-webkit-scrollbar-thumb {
-    background-color: #A9A9A9; /* Set scrollbar thumb color */
-    border-radius: 8px;
+/* Medium screens (Tablets: 768px to 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    #home-Title {
+        font-size: 1.75rem;
+    }
+
+    .folder-cards>* {
+        flex: 1 1 calc(50% - 20px);
+        /* 2 cards per row */
+    }
 }
 
-.files-table::-webkit-scrollbar-track {
-    background-color: transparent; /* Transparent to avoid affecting design */
+/* Large screens (Laptops: 1025px to 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    .folder-cards>* {
+        flex: 1 1 calc(33.33% - 20px);
+        /* 3 cards per row */
+    }
 }

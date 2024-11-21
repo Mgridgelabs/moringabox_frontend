@@ -1,5 +1,5 @@
 /* Global Reset for Consistent Layout */
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -7,10 +7,10 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #FFFFFF; /* Fixed the background color */
+  background-color: #FFFFFF; 
   color: #333;
   min-width: 1200px;
-}
+} */
 
 /* Main container */
 /* .app-container {
@@ -25,3 +25,27 @@ body {
   padding: 0 40px;
 } */
 
+/* General structure for media queries */
+@media (min-width: Xpx) and (max-width: Ypx) {
+  /* Styles for this range */
+}
+
+/* Mobile devices (up to 767px) */
+@media (max-width: 767px) {
+  /* Styles for mobile devices */
+}
+
+/* Tablet devices (768px to 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Styles for tablets */
+}
+
+/* Laptops (1025px to 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  /* Styles for laptops */
+}
+
+/* Desktop (1441px and above) */
+@media (min-width: 1441px) {
+  /* Styles for desktops */
+}
