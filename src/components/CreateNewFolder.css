@@ -35,3 +35,8 @@
   background-color: #e6e6e6;
   outline: none;
 }
+.fcSubmit {
+  width: 80px;
+  padding: 4px;
+  background-color: #006400;
+}
