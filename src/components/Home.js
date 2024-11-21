@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import FolderCards from './FolderCards';
 import './Home.css';
 import supabase from '../supabase'; // Import the Supabase client
@@ -50,7 +50,7 @@ function Home() {
         const response = await axios.get(
           'https://cloudy-wiwu.onrender.com/api/recents/folders',
           {
-            headers: { Authorization: Bearer ${token} },
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
         setFolders(response.data.recent_folders);
@@ -69,10 +69,10 @@ function Home() {
   
       // Send the request to the backend
       const response = await axios.put(
-        https://cloudy-wiwu.onrender.com/api/folders/update_name/${id},
+        `https://cloudy-wiwu.onrender.com/api/folders/update_name/${id}`,
         { new_name: newName }, // Use "new_name" as required by the API
         {
-          headers: { Authorization: Bearer ${token} },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
   
@@ -99,8 +99,8 @@ function Home() {
   const deleteFolder = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(https://cloudy-wiwu.onrender.com/api/folders/${id}, {
-        headers: { Authorization: Bearer ${token} },
+      await axios.delete(`https://cloudy-wiwu.onrender.com/api/folders/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
   
       // Update the folders state after deletion
@@ -117,7 +117,6 @@ function Home() {
       }
     }
   };
-  
   
 
   return (
@@ -141,7 +140,6 @@ function Home() {
                 onRename={renameFolder}
                 onDelete={deleteFolder}
               />
-
             ))
           ) : (
             <p>No Folders Found</p>
