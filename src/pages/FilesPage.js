@@ -81,41 +81,33 @@ useEffect(() => {
   };
 
   // Handle moving file to a selected folder
-  const handleMoveFile = async (fileName) => {
-    if (!selectedFolder) {
-      alert("Please select a folder to move the file.");
-      return;
-    }
+  const handleMoveFile = async (fileId) => {
+  if (!selectedFolder) {
+    alert("Please select a folder to move the file.");
+    return;
+  }
 
-    try {
-      const targetPath = `folders/${selectedFolder}/${fileName}`;
-      const { data: copyData, error: copyError } = await supabase.storage
-        .from("bucket")
-        .copy(`files/${fileName}`, targetPath);
-
-      if (copyError || !copyData) {
-        alert("Failed to move the file.");
-        console.error(copyError || "No data returned from copy");
-        return;
+  try {
+    const response = await axios.put(
+      `https://cloudy-wiwu.onrender.com/api/move/${fileId}`, // Adjust to the actual base URL
+      { new_folder_id: selectedFolder }, // Send the selected folder ID
+      {
+        headers: { Authorization: `Bearer ${token}` }, // Include the token for authentication
       }
+    );
 
-      const { error: deleteError } = await supabase.storage
-        .from("bucket")
-        .remove([`files/${fileName}`]);
-
-      if (deleteError) {
-        alert("Failed to delete the original file.");
-        console.error(deleteError);
-        return;
-      }
-
-      fetchFiles();
-      alert(`File moved to ${selectedFolder} successfully!`);
-    } catch (err) {
-      alert("An error occurred while moving the file.");
-      console.error(err);
+    if (response.status === 200) {
+      alert("File moved successfully!");
+      fetchFiles(); // Refresh the file list after moving the file
+    } else {
+      alert(response.data.error || "Failed to move file.");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    alert(err.response?.data?.error || "An error occurred while moving the file.");
+  }
+};
+
 
   const handleRenameFile = async () => {
     if (!renameFileName || !newFileName) {
