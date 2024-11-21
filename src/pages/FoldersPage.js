@@ -48,7 +48,7 @@ const FoldersPage = () => {
     setFiles([]);
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`https://cloudy-wiwu.onrender.com/api/files/all`, {
+      const response = await axios.get(`https://cloudy-wiwu.onrender.com/api/files/folder_files/{selectedFolder.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
