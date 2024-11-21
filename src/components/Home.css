@@ -69,6 +69,10 @@
     background-color: #f9f9f9;
 } */
 
+.files-table tbody tr {
+    background-color: #f9f9f9;
+}
+
 /* Media Queries */
 
 /* Small screens (Mobile: up to 767px) */
