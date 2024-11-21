@@ -197,20 +197,20 @@ const FilesPage = () => {
                   </td>
                   <td>
                     <button
-                      style="background-color: #007BFF; color: white;"
+                      id="moveBtn"
                       onClick={() =>
                         handleMoveFile(file.name, "target-subfolder") // Replace with the folder name
                       }
                     >
                       Move to Folder
                     </button>
-                    <button style="background-color: #28A745; color: white;" onClick={() => handleDownloadFile(file.name)}>
+                    <button id="downloadBtn" onClick={() => handleDownloadFile(file.name)}>
                       Download
                     </button>
-                    <button style="background-color: #FFA500; color: white;" onClick={() => setRenameFileName(file.name)}>
+                    <button id="renameBtn" onClick={() => setRenameFileName(file.name)}>
                       Rename
                     </button>
-                    <button style="background-color: #DC3545; color: white;" onClick={() => deleteFile(file.name)}>Delete</button> {/* Delete Button */}
+                    <button id="deleteBtn" onClick={() => deleteFile(file.name)}>Delete</button> {/* Delete Button */}
                   </td>
                 </tr>
               ))}
