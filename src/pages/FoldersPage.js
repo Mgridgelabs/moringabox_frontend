@@ -43,24 +43,25 @@ const FoldersPage = () => {
   }, []);
 
   const handleFolderClick = async (folder) => {
-    setSelectedFolder(folder);
-    setFilesLoading(true);
-    setFiles([]);
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(`https://cloudy-wiwu.onrender.com/api/files/folder_files/{selectedFolder.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      setFiles(response.data.files);
-    } catch (err) {
-      setError(err.response?.data?.msg || "Failed to fetch files");
-    } finally {
-      setFilesLoading(false);
-    }
-  };
+      setSelectedFolder(folder);
+      setFilesLoading(true);
+      setFiles([]);
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`https://cloudy-wiwu.onrender.com/api/files/folder_files/${folder.id}`, { // Corrected folder.id
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        setFiles(response.data.files);
+      } catch (err) {
+        setError(err.response?.data?.msg || "Failed to fetch files");
+      } finally {
+        setFilesLoading(false);
+      }
+};
+
 
   // Filtered list of folders based on search term
   const filteredFolders = folders.filter((folder) =>
