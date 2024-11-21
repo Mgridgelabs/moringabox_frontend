@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import FileFolderContent from "../components/FileFolderContent";
 import "./FoldersPage.css";
 import { Folder } from "lucide-react";
-import back2 from "../assets/back_img.png"
+import back2 from "../assets/back_img.png";
 import axios from "axios";
 
 const FoldersPage = () => {
@@ -10,14 +10,14 @@ const FoldersPage = () => {
   const [folders, setFolders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [selectedFolder, setSelectedFolder] = useState(null); // Track selected folder
-  const [files, setFiles] = useState([]); // Track files in selected folder
+  const [selectedFolder, setSelectedFolder] = useState(null);
+  const [files, setFiles] = useState([]);
   const [filesLoading, setFilesLoading] = useState(false);
 
   useEffect(() => {
     const fetchFolders = async () => {
       try {
-        const token = localStorage.getItem("token"); // Token is stored in localStorage
+        const token = localStorage.getItem("token");
         if (!token) {
           setError("User is not authenticated");
           setLoading(false);
@@ -43,27 +43,25 @@ const FoldersPage = () => {
   }, []);
 
   const handleFolderClick = async (folder) => {
-      setSelectedFolder(folder);
-      setFilesLoading(true);
-      setFiles([]);
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(`https://cloudy-wiwu.onrender.com/api/files/folder_files/${folder.id}`, { // Corrected folder.id
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-        setFiles(response.data.files);
-      } catch (err) {
-        setError(err.response?.data?.msg || "Failed to fetch files");
-      } finally {
-        setFilesLoading(false);
-      }
-};
+    setSelectedFolder(folder);
+    setFilesLoading(true);
+    setFiles([]);
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(`https://cloudy-wiwu.onrender.com/api/files/folder_files/${folder.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      setFiles(response.data.files);
+    } catch (err) {
+      setError(err.response?.data?.msg || "Failed to fetch files");
+    } finally {
+      setFilesLoading(false);
+    }
+  };
 
-
-  // Filtered list of folders based on search term
   const filteredFolders = folders.filter((folder) =>
     folder.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -75,7 +73,6 @@ const FoldersPage = () => {
         <h2>Folders</h2>
       </div>
 
-      {/* Search Bar */}
       <div className="filters">
         <input
           type="text"
@@ -85,21 +82,27 @@ const FoldersPage = () => {
         />
       </div>
 
-      {/* Display loading, error, or folders */}
       {loading ? (
         <p>Loading folders...</p>
       ) : error ? (
         <p className="error-message">{error}</p>
       ) : selectedFolder ? (
         <div>
-          <img src={back2} alt="back" onClick={() => setSelectedFolder(null)} className="backbtn" />
+          <img
+            src={back2}
+            alt="back"
+            onClick={() => setSelectedFolder(null)}
+            className="backbtn"
+          />
           <h3>Files in {selectedFolder.name}</h3>
           {filesLoading ? (
             <p>Loading files...</p>
           ) : files.length > 0 ? (
             <ul className="folder-list3">
               {files.map((file) => (
-                <li key={file.id} className="folder-item3">{file.name} </li>
+                <li key={file.id} className="folder-item3">
+                  {file.name}
+                </li>
               ))}
             </ul>
           ) : (
@@ -107,7 +110,11 @@ const FoldersPage = () => {
           )}
         </div>
       ) : (
-        <FileFolderContent items={filteredFolders} itemType="folder" onItemClick={handleFolderClick} />
+        <FileFolderContent
+          items={filteredFolders}
+          itemType="folder"
+          onItemClick={handleFolderClick}
+        />
       )}
     </div>
   );
