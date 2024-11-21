@@ -48,19 +48,24 @@ const FoldersPage = () => {
     setFiles([]);
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`https://cloudy-wiwu.onrender.com/api/files/folder_files/${folder.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.get(
+        `https://cloudy-wiwu.onrender.com/api/files/folder_files/${folder.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       setFiles(response.data.files);
     } catch (err) {
-      setError(err.response?.data?.msg || "Failed to fetch files");
+      console.error("Error fetching files:", err);
+      setError(err.response?.data?.error || "Failed to fetch files");
     } finally {
       setFilesLoading(false);
     }
-  };
+};
+
 
   const filteredFolders = folders.filter((folder) =>
     folder.name.toLowerCase().includes(searchTerm.toLowerCase())
