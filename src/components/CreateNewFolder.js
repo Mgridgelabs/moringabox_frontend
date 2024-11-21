@@ -60,15 +60,13 @@ const CreateFolder = () => {
       </button>
       {showForm && (
         <form onSubmit={handleSubmit}>
-          <label>
-            Folder Name:
             <input
               type="text"
+              placeholder="Folder Name:"
               value={folderName}
               onChange={handleInputChange}
               required
             />
-          </label>
           <button type="submit" className="fcSubmit">Create</button>
         </form>
       )}
