@@ -1,9 +1,9 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Folder_icon from '../assets/folder_icon.png';
 import more_vert from '../assets/more_vert.png';
 import './FolderCards.css';
 
-function FolderCards({ folderName, folderId, onRename, onDelete }) {
+function FolderCards({ folderName, folderId, onRename, onDelete, onDrop }) {
   const [showOptions, setShowOptions] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);
   const [newName, setNewName] = useState(folderName);
@@ -39,8 +39,24 @@ function FolderCards({ folderName, folderId, onRename, onDelete }) {
     setShowOptions(false);
   };
 
+  // Handle file drop event
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const fileId = e.dataTransfer.getData('fileId');
+    onDrop(fileId, folderId);
+  };
+
+  // Handle drag over event
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className="folderCard">
+    <div
+      className="folderCard"
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+    >
       <img src={Folder_icon} alt="folder_icon" className="FolderIcon" />
       <img
         src={more_vert}
