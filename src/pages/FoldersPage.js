@@ -99,7 +99,7 @@ const FoldersPage = () => {
           ) : files.length > 0 ? (
             <ul className="folder-list3">
               {files.map((file) => (
-                <li key={file.id} className="folder-item3">{file.name} <img src={more_vert} className="more2" alt="more"/></li>
+                <li key={file.id} className="folder-item3">{file.name} </li>
               ))}
             </ul>
           ) : (
