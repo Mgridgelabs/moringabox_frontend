@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import supabase from "../supabase"; // Import the Supabase client
-import './FilesPage.css'
+import './FilesPage.css';
 
 const FilesPage = () => {
   const [files, setFiles] = useState([]);
@@ -13,15 +13,12 @@ const FilesPage = () => {
     try {
       const { data, error } = await supabase.storage
         .from("bucket") // Replace 'bucket' with your actual bucket name
-        .list("files", {
-          limit: 10,
-          offset: 0,
-        });
+        .list("files", { limit: 10, offset: 0 });
 
       if (error) {
         setError(error.message);
       } else {
-        setFiles(data || []); // Ensure data is an array even if it's null
+        setFiles(data || []);
         setError("");
       }
     } catch (err) {
@@ -33,7 +30,7 @@ const FilesPage = () => {
     try {
       const { data, error } = await supabase.storage
         .from("bucket")
-        .createSignedUrl(files/${fileName}, 60); // Generate a signed URL valid for 60 seconds
+        .createSignedUrl(`files/${fileName}`, 60); // Corrected with backticks
 
       if (error || !data) {
         alert("Failed to open the file.");
@@ -49,10 +46,10 @@ const FilesPage = () => {
 
   const handleMoveFile = async (fileName, targetFolder) => {
     try {
-      const targetPath = folders/${targetFolder}/${fileName};
+      const targetPath = `folders/${targetFolder}/${fileName}`; // Corrected with backticks
       const { data: copyData, error: copyError } = await supabase.storage
         .from("bucket")
-        .copy(files/${fileName}, targetPath);
+        .copy(`files/${fileName}`, targetPath); // Corrected with backticks
 
       if (copyError || !copyData) {
         alert("Failed to move the file.");
@@ -62,7 +59,7 @@ const FilesPage = () => {
 
       const { error: deleteError } = await supabase.storage
         .from("bucket")
-        .remove([files/${fileName}]);
+        .remove([`files/${fileName}`]); // Corrected with backticks
 
       if (deleteError) {
         alert("Failed to delete the original file.");
@@ -71,7 +68,7 @@ const FilesPage = () => {
       }
 
       fetchFiles();
-      alert(File moved to ${targetFolder} successfully!);
+      alert(`File moved to ${targetFolder} successfully!`);
     } catch (err) {
       alert("An error occurred while moving the file.");
       console.error(err);
@@ -87,7 +84,7 @@ const FilesPage = () => {
     try {
       const { data: copyData, error: copyError } = await supabase.storage
         .from("bucket")
-        .copy(files/${renameFileName}, files/${newFileName});
+        .copy(`files/${renameFileName}`, `files/${newFileName}`); // Corrected with backticks
 
       if (copyError || !copyData) {
         alert("Failed to rename the file.");
@@ -97,7 +94,7 @@ const FilesPage = () => {
 
       const { error: deleteError } = await supabase.storage
         .from("bucket")
-        .remove([files/${renameFileName}]);
+        .remove([`files/${renameFileName}`]); // Corrected with backticks
 
       if (deleteError) {
         alert("Failed to delete the original file.");
@@ -106,7 +103,7 @@ const FilesPage = () => {
       }
 
       fetchFiles();
-      alert(File renamed to ${newFileName} successfully!);
+      alert(`File renamed to ${newFileName} successfully!`);
       setRenameFileName("");
       setNewFileName("");
     } catch (err) {
@@ -119,7 +116,7 @@ const FilesPage = () => {
     try {
       const { data, error } = await supabase.storage
         .from("bucket")
-        .createSignedUrl(files/${fileName}, 60); // Generate a signed URL
+        .createSignedUrl(`files/${fileName}`, 60); // Corrected with backticks
 
       if (error || !data) {
         alert("Failed to download the file.");
@@ -143,7 +140,7 @@ const FilesPage = () => {
     try {
       const { error } = await supabase.storage
         .from("bucket")
-        .remove([files/${fileName}]); // Delete the file from the storage bucket
+        .remove([`files/${fileName}`]); // Corrected with backticks
 
       if (error) {
         alert("Failed to delete the file.");
@@ -152,7 +149,7 @@ const FilesPage = () => {
       }
 
       fetchFiles();
-      alert(File ${fileName} deleted successfully!);
+      alert(`File ${fileName} deleted successfully!`);
     } catch (err) {
       alert("An error occurred while deleting the file.");
       console.error(err);
@@ -192,50 +189,25 @@ const FilesPage = () => {
                 >
                   <td>{file.name}</td>
                   <td>{file.size ? (file.size / 1024).toFixed(2) : "N/A"} KB</td>
-                  <td>
-                    {file.created_at
-                      ? new Date(file.created_at).toLocaleString()
-                      : "N/A"}
-                  </td>
+                  <td>{file.created_at ? new Date(file.created_at).toLocaleString() : "N/A"}</td>
                   <td>
                     <button
-                      id="moveBtn"
-                      onClick={() =>
-                        handleMoveFile(file.name, "target-subfolder") // Replace with the folder name
-                      }
+                      onClick={() => deleteFile(file.name)}
+                      className="delete-button"
                     >
-                      Move to Folder
+                      Delete
                     </button>
-                    <button id="downloadBtn" onClick={() => handleDownloadFile(file.name)}>
-                      Download
-                    </button>
-                    <button id="renameBtn" onClick={() => setRenameFileName(file.name)}>
-                      Rename
-                    </button>
-                    <button id="deleteBtn" onClick={() => deleteFile(file.name)}>Delete</button> {/* Delete Button */}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-
-          {renameFileName && (
-            <div className="rename-modal">
-              <h2>Rename File</h2>
-              <p>Current Name: {renameFileName}</p>
-              <input
-                type="text"
-                placeholder="Enter new file name"
-                value={newFileName}
-                onChange={(e) => setNewFileName(e.target.value)}
-              />
-              <button onClick={handleRenameFile}>Rename</button>
-              <button onClick={() => setRenameFileName("")}>Cancel</button>
-            </div>
-          )}
+          <button onClick={() => handleRenameFile()} className="rename-button">
+            Rename Selected File
+          </button>
         </>
       ) : (
-        !error && <p>No files available.</p>
+        <p>No files available.</p>
       )}
     </div>
   );
