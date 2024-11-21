@@ -1,5 +1,5 @@
 import React from 'react';
-//import './FileFolderContent.css';
+import './FileFolderContent.css';
 
 const FileFolderContent = ({ items, itemType, onItemClick }) => {
   return (
