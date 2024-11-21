@@ -30,7 +30,7 @@
   padding: 8px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
-  margin-left: -20px;
+  margin-left: -30px;
 }
 .fcContainer input:focus {
   background-color: #e6e6e6;
@@ -40,5 +40,5 @@
   width: 80px;
   padding: 4px;
   background-color: #006400;
-  margin-left: 20px;
+  margin-left: 15px;
 }
