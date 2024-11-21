@@ -9,7 +9,10 @@
     margin: auto;
     font-family: Arial, sans-serif;
 }
-
+.files-table {
+    background-color: white;
+    border-radius: 8px;
+}
 .icon-and-title {
     display: flex;
     align-items: center;
