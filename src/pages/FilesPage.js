@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import supabase from "../supabase"; // Import the Supabase client
-import './FilesPage.css'
+import './FilesPage.css';
 
 const FilesPage = () => {
   const [files, setFiles] = useState([]);
+  const [folders, setFolders] = useState([]); // State for folder names
   const [error, setError] = useState("");
   const [renameFileName, setRenameFileName] = useState("");
   const [newFileName, setNewFileName] = useState("");
@@ -13,19 +14,29 @@ const FilesPage = () => {
     try {
       const { data, error } = await supabase.storage
         .from("bucket") // Replace 'bucket' with your actual bucket name
-        .list("files", {
-          limit: 10,
-          offset: 0,
-        });
+        .list("files", { limit: 10, offset: 0 });
 
       if (error) {
         setError(error.message);
       } else {
-        setFiles(data || []); // Ensure data is an array even if it's null
+        setFiles(data || []);
         setError("");
       }
     } catch (err) {
       setError("Failed to fetch files.");
+    }
+  };
+
+  const fetchFolders = async () => {
+    try {
+      const { data, error } = await supabase.storage.from("bucket").list("folders");
+      if (error) {
+        console.error("Error fetching folders:", error);
+      } else {
+        setFolders(data || []);
+      }
+    } catch (err) {
+      console.error("An error occurred while fetching folders:", err);
     }
   };
 
@@ -48,6 +59,11 @@ const FilesPage = () => {
   };
 
   const handleMoveFile = async (fileName, targetFolder) => {
+    if (!targetFolder) {
+      alert("Please select a folder.");
+      return;
+    }
+
     try {
       const targetPath = `folders/${targetFolder}/${fileName}`;
       const { data: copyData, error: copyError } = await supabase.storage
@@ -162,6 +178,7 @@ const FilesPage = () => {
   useEffect(() => {
     if (token) {
       fetchFiles();
+      fetchFolders(); // Fetch folders on mount
     } else {
       setError("User not logged in. Please log in to view files.");
     }
@@ -198,21 +215,26 @@ const FilesPage = () => {
                       : "N/A"}
                   </td>
                   <td>
-                    <button
-                      id="moveBtn"
-                      onClick={() =>
-                        handleMoveFile(file.name, "target-subfolder") // Replace with the folder name
-                      }
+                    <select
+                      onChange={(e) => handleMoveFile(file.name, e.target.value)}
+                      defaultValue=""
                     >
-                      Move to Folder
-                    </button>
+                      <option value="" disabled>
+                        Move to Folder
+                      </option>
+                      {folders.map((folder, index) => (
+                        <option key={index} value={folder.name}>
+                          {folder.name}
+                        </option>
+                      ))}
+                    </select>
                     <button id="downloadBtn" onClick={() => handleDownloadFile(file.name)}>
                       Download
                     </button>
                     <button id="renameBtn" onClick={() => setRenameFileName(file.name)}>
                       Rename
                     </button>
-                    <button id="deleteBtn" onClick={() => deleteFile(file.name)}>Delete</button> {/* Delete Button */}
+                    <button id="deleteBtn" onClick={() => deleteFile(file.name)}>Delete</button>
                   </td>
                 </tr>
               ))}
