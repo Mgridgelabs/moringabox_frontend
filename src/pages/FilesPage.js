@@ -87,8 +87,8 @@ const FilesPage = () => {
 
     try {
       const response = await axios.put(
-        `https://cloudy-wiwu.onrender.com/api/files/move/91`,
-        { new_folder_id: selectedFolder }, // Send the selected folder ID
+        `https://cloudy-wiwu.onrender.com/api/files/move/99`,
+        { new_folder_id: selectedFolder.id }, // Send the selected folder ID
         {
           headers: { Authorization: `Bearer ${token}` },
         }
