@@ -35,7 +35,7 @@ const CreateFolder = () => {
     } catch (error) {
       if (error.response) {
         console.error("Error response:", error.response.data); // Log error for debugging
-        setMessage(`Error: ${error.response.data.error || "Something went wrong!"}`);
+        // setMessage(`Error: ${error.response.data.error || "Something went wrong!"}`);
       } else {
         console.error("Unexpected error:", error); // Log unexpected errors
         setMessage("An unexpected error occurred");
@@ -45,6 +45,12 @@ const CreateFolder = () => {
 
   const toggleFormVisibility = () => {
     setShowForm((prevShowForm) => !prevShowForm);
+
+    // Clear the input and message when closing the form
+    if (showForm) {
+      setFolderName("");
+      setMessage("");
+    }
   };
 
   return (
