@@ -31,7 +31,12 @@
 .filesDiv {
     margin-top: 20px;
 }
-
+.filesDiv {
+    border-radius: 8px;
+}
+.files-Container {
+    border-radius: 8px;
+}
 .folder-cards,
 .files-container {
     display: flex;
@@ -63,7 +68,7 @@
 }
 
 .files-table th {
-    background-color: #f4f4f4;
+    background-color: #D9D9D999;
     font-weight: bold;
 }
 
