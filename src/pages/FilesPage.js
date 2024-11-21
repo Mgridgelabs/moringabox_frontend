@@ -35,7 +35,7 @@ const FilesPage = () => {
   // Fetch folders from the API endpoint
   const fetchFolders = async () => {
     try {
-      const response = await fetch("https://cloudy-wiwu.onrender.com/recents/folders", {
+      const response = await fetch("https://cloudy-wiwu.onrender.com/api/recents/folders", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
