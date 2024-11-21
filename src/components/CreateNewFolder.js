@@ -41,9 +41,9 @@ const CreateFolder = () => {
   };
 
   return (
-    <div>
-      <button onClick={toggleFormVisibility}>
-        {showForm ? "Hide Create Folder Form" : "Show Create Folder Form"}
+    <div className="fcContainer">
+      <button onClick={toggleFormVisibility} className="fcBtn">
+        {showForm ? "Close" : "Create Folder"}
       </button>
       {showForm && (
         <form onSubmit={handleSubmit}>
