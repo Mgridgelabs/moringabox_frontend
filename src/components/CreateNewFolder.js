@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import './CreateNewFolder.css'
+import "./CreateNewFolder.css";
 
 const CreateFolder = () => {
   const [folderName, setFolderName] = useState("");
   const [message, setMessage] = useState("");
-  const [showForm, setShowForm] = useState(false); // State to toggle form visibility
+  const [showForm, setShowForm] = useState(false);
 
   const handleInputChange = (e) => {
     setFolderName(e.target.value);
@@ -16,7 +16,9 @@ const CreateFolder = () => {
 
     try {
       const token = localStorage.getItem("token"); // JWT stored in localStorage
-      const response = await axios.post(
+
+      // Make the API call to create a folder
+      await axios.post(
         "https://cloudy-wiwu.onrender.com/api/folders/create",
         { name: folderName },
         {
@@ -26,17 +28,19 @@ const CreateFolder = () => {
           },
         }
       );
-      setMessage(`Folder created successfully!`);
-      setFolderName("");
+
+      // Update the UI with a success message
+      setMessage("Folder created successfully!");
+      setFolderName(""); // Clear the input field
     } catch (error) {
-        if (error.response) {
-          console.log(error.response.data); // Debugging: Log full error response
-          setMessage(`Error: ${error.response.data.error || "Something went wrong!"}`);
-        } else {
-          console.log(error); // Log unexpected errors
-          setMessage("An unexpected error occurred");
-        }
+      if (error.response) {
+        console.error("Error response:", error.response.data); // Log error for debugging
+        setMessage(`Error: ${error.response.data.error || "Something went wrong!"}`);
+      } else {
+        console.error("Unexpected error:", error); // Log unexpected errors
+        setMessage("An unexpected error occurred");
       }
+    }
   };
 
   const toggleFormVisibility = () => {
