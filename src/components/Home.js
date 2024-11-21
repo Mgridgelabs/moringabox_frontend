@@ -78,6 +78,43 @@ function Home() {
     }
   };
 
+  // Define renameFolder function
+  const renameFolder = async (folderId, newFolderName) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.put(
+        `https://cloudy-wiwu.onrender.com/api/folders/rename/${folderId}`,
+        { new_name: newFolderName },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      alert('Folder renamed successfully');
+    } catch (err) {
+      console.error('Failed to rename folder:', err);
+      alert('An error occurred while renaming the folder.');
+    }
+  };
+
+  // Define deleteFolder function
+  const deleteFolder = async (folderId) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(
+        `https://cloudy-wiwu.onrender.com/api/folders/${folderId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      alert('Folder deleted successfully');
+      // Remove the deleted folder from the state
+      setFolders(folders.filter((folder) => folder.id !== folderId));
+    } catch (err) {
+      console.error('Failed to delete folder:', err);
+      alert('An error occurred while deleting the folder.');
+    }
+  };
+
   return (
     <div className="home-Content">
       <h1 id="home-Title">Welcome To Drive</h1>
@@ -92,9 +129,9 @@ function Home() {
                 key={folder.id}
                 folderName={folder.name}
                 folderId={folder.id}
-                onRename={renameFolder}
-                onDelete={deleteFolder}
-                onDrop={handleFileMove} // Pass the file move function to FolderCards
+                onRename={renameFolder} // Pass rename function
+                onDelete={deleteFolder} // Pass delete function
+                onDrop={handleFileMove} // Pass the file move function
               />
             ))
           ) : (
