@@ -193,8 +193,8 @@ const New = () => {
             ))}
           </div>
         )}
+          <CreateFolder /> {/* Keep the Create Folder component */}
       </div>
-      <CreateFolder /> {/* Keep the Create Folder component */}
     </div>
   );
 };
