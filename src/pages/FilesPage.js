@@ -34,25 +34,32 @@ const FilesPage = () => {
     }
   };
 
-  // Fetch folders from the API endpoint
-  useEffect(() => {
-    const fetchFolders = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get(
-          'https://cloudy-wiwu.onrender.com/api/recents/folders',
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setFolders(response.data.recent_folders);
-      } catch (err) {
-        console.error(err);
-        setFoldersError('Failed to fetch folders');
+// Fetch folders from the API endpoint
+const fetchFolders = async () => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await axios.get(
+      'https://cloudy-wiwu.onrender.com/api/recents/folders',
+      {
+        headers: { Authorization: `Bearer ${token}` },
       }
-    };
-    fetchFolders();
-  }, []);
+    );
+    setFolders(response.data.recent_folders);
+  } catch (err) {
+    console.error(err);
+    setFoldersError('Failed to fetch folders');
+  }
+};
+
+useEffect(() => {
+  if (token) {
+    fetchFiles();
+    fetchFolders(); // Now accessible since it's defined globally
+  } else {
+    setError("User not logged in. Please log in to view files.");
+  }
+}, [token]);
+
 
   // Handle file double-click to view
   const handleFileDoubleClick = async (fileName) => {
