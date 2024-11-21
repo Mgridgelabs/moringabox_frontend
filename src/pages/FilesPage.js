@@ -79,7 +79,7 @@ const FilesPage = () => {
   };
 
   // Handle moving file to a selected folder
-  const handleMoveFile = async (fileId) => {
+  const handleMoveFile = async () => {
     if (!selectedFolder) {
       alert("Please select a folder to move the file.");
       return;
@@ -87,7 +87,7 @@ const FilesPage = () => {
 
     try {
       const response = await axios.put(
-        `https://cloudy-wiwu.onrender.com/api/files/move/${fileId}`,
+        `https://cloudy-wiwu.onrender.com/api/files/move/91`,
         { new_folder_id: selectedFolder }, // Send the selected folder ID
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -231,7 +231,7 @@ const FilesPage = () => {
                         </option>
                       ))}
                     </select>
-                    <button onClick={() => handleMoveFile(file.id)}>
+                    <button onClick={() => handleMoveFile()}>
                       Move to Folder
                     </button>
                     <button onClick={() => handleDownloadFile(file.name)}>
