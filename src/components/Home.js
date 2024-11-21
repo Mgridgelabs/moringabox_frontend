@@ -9,6 +9,7 @@ function Home() {
   const [folders, setFolders] = useState([]);
   const [filesError, setFilesError] = useState('');
   const [foldersError, setFoldersError] = useState('');
+  const [searchQuery, setSearchQuery] = useState(''); // Added search query state
 
   // Fetch Files
   useEffect(() => {
@@ -117,22 +118,35 @@ function Home() {
       }
     }
   };
-  
+
+  // Filter files and folders based on the search query
+  const filteredFiles = files.filter(file =>
+    file.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredFolders = folders.filter(folder =>
+    folder.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="home-Content">
       <h1 id="home-Title">Welcome To Drive</h1>
       <div className="searchDiv">
         <h2 id="search-title">Search</h2>
-        <input name="search field" placeholder="search text" />
+        <input
+          name="search field"
+          placeholder="search text"
+          value={searchQuery} // Bind the value to the state
+          onChange={(e) => setSearchQuery(e.target.value)} // Update the search query on change
+        />
       </div>
       <div className="foldersDiv">
         <h1 id="folders-title">Folders</h1>
         <div className="folder-cards">
           {foldersError ? (
             <p>{foldersError}</p>
-          ) : folders.length > 0 ? (
-            folders.map((folder) => (
+          ) : filteredFolders.length > 0 ? (
+            filteredFolders.map((folder) => (
               <FolderCards
                 key={folder.id}
                 folderName={folder.name}
@@ -163,8 +177,8 @@ function Home() {
                 <tr>
                   <td colSpan="4">{filesError}</td>
                 </tr>
-              ) : files.length > 0 ? (
-                files.map((file, index) => (
+              ) : filteredFiles.length > 0 ? (
+                filteredFiles.map((file, index) => (
                   <tr key={index}>
                     <td></td> {/* Placeholder for file icon */}
                     <td>{file.name}</td>
