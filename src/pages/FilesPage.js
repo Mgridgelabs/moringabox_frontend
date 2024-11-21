@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import supabase from "../supabase"; // Import the Supabase client
+import './FilesPage.css'
 
 const FilesPage = () => {
   const [files, setFiles] = useState([]);
@@ -169,6 +170,7 @@ const FilesPage = () => {
   return (
     <div className="files-page">
       <h1>File Management</h1>
+      <p>Double-click a file to view it.</p>
       {error && <p className="error">{error}</p>}
       {files.length > 0 ? (
         <>
